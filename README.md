@@ -1,6 +1,6 @@
 # PanjoCoin Smart Contract (PNJC)
 
-This repository contains the official smart contract for **PanjoCoin (PNJC)** — a utility meme token deployed on the Polygon blockchain.
+This repository contains the official smart contract for **PanjoCoin (PNJC)** — a utility meme token deployed on the Polygon blockchain.                            
 
 ## Overview
 
@@ -19,6 +19,8 @@ A portion of the project is dedicated to supporting **clown therapy initiatives*
 ## Smart Contract
 
 The smart contract is written in Solidity and follows the ERC-20 standard using OpenZeppelin libraries for security and reliability.
+
+### Official Contract Address (Polygon): 0x6603Af71E07A63427A1aac0ED05004ea34cF4302
 
 ### Features
 
