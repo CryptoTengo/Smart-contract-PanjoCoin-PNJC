@@ -20,7 +20,7 @@ A portion of the project is dedicated to supporting **clown therapy initiatives*
 
 The smart contract is written in Solidity and follows the ERC-20 standard using OpenZeppelin libraries for security and reliability.
 
-### Official Contract Address (Polygon): 0x6603Af71E07A63427A1aac0ED05004ea34cF4302
+### Official Contract Address (Polygon): 0xdA25Ed82Cf814f0a30f6C95231c3B77056E18286
 
 ### Features
 
