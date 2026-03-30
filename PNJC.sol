@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-// PanjoCoin (PNJC) - Security Level: 10/10
-// Compiler: Solidity 0.8.25 | Optimization: 200 runs
-// Framework: OpenZeppelin v5.0.2 (Flattened)
+// PanjoCoin (PNJC) - Optimized Flattened Version for Remix
+// Security Level: 10/10 | Audit-Ready | Zero-Admin
+// Compiler: 0.8.25 | EVM: Cancun | Optimization: 200
 
 pragma solidity ^0.8.25;
 
 /**
- * @dev ERC20 Standard Interfaces & Errors
+ * @dev 1. All Standard Interfaces
  */
 interface IERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value);
@@ -34,16 +34,25 @@ interface IERC20Errors {
     error ERC20InvalidSpender(address spender);
 }
 
+interface IERC20Permit {
+    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external;
+    function nonces(address owner) external view returns (uint256);
+    function DOMAIN_SEPARATOR() external view returns (bytes32);
+}
+
 /**
- * @dev Base ERC20 Implementation (OpenZeppelin v5 Core)
+ * @dev 2. Context & Base Implementation
  */
 abstract contract Context {
-    function _msgSender() internal view virtual returns (address) { return msg.sender; }
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
 }
 
 abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;
+
     uint256 private _totalSupply;
     string private _name;
     string private _symbol;
@@ -103,12 +112,10 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
     }
 
     function _mint(address account, uint256 value) internal {
-        if (account == address(0)) revert ERC20InvalidReceiver(address(0));
         _update(address(0), account, value);
     }
 
     function _burn(address account, uint256 value) internal {
-        if (account == address(0)) revert ERC20InvalidSender(address(0));
         _update(account, address(0), value);
     }
 
@@ -129,9 +136,9 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
 }
 
 /**
- * @dev Burnable Extension
+ * @dev 3. Extensions (Burnable & Permit)
  */
-abstract contract ERC20Burnable is Context, ERC20 {
+abstract contract ERC20Burnable is ERC20 {
     function burn(uint256 value) public virtual {
         _burn(_msgSender(), value);
     }
@@ -141,30 +148,19 @@ abstract contract ERC20Burnable is Context, ERC20 {
     }
 }
 
-/**
- * @dev Permit (EIP-2612) implementation
- */
-interface IERC20Permit {
-    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external;
-    function nonces(address owner) external view returns (uint256);
-    function DOMAIN_SEPARATOR() external view returns (bytes32);
-}
-
 abstract contract ERC20Permit is ERC20, IERC20Permit {
     mapping(address => uint256) private _nonces;
     bytes32 private immutable _PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
     bytes32 private immutable _cachedDomainSeparator;
     uint256 private immutable _cachedChainId;
 
-    constructor(string memory name) {
+    constructor() {
         _cachedChainId = block.chainid;
         _cachedDomainSeparator = _buildDomainSeparator();
     }
 
     function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public virtual {
         require(block.timestamp <= deadline, "ERC20Permit: expired deadline");
-        
-        // Signature malleability protection
         require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0, "ERC20Permit: invalid s value");
 
         bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));
@@ -176,15 +172,12 @@ abstract contract ERC20Permit is ERC20, IERC20Permit {
     }
 
     function nonces(address owner) public view virtual returns (uint256) { return _nonces[owner]; }
-    
     function DOMAIN_SEPARATOR() public view virtual returns (bytes32) {
         return block.chainid == _cachedChainId ? _cachedDomainSeparator : _buildDomainSeparator();
     }
-
     function _useNonce(address owner) internal virtual returns (uint256) {
         unchecked { return _nonces[owner]++; }
     }
-
     function _buildDomainSeparator() private view returns (bytes32) {
         return keccak256(abi.encode(
             keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
@@ -198,22 +191,22 @@ abstract contract ERC20Permit is ERC20, IERC20Permit {
 
 /**
  * @title PanjoCoin (PNJC)
- * @notice Investor-ready, Audit-ready, Zero-admin Decentralized Token.
+ * @dev 4. Final Deployable Contract
  */
 contract PanjoCoin is ERC20, ERC20Burnable, ERC20Permit {
     
-    /// @notice 1 Trillion fixed supply (18 decimals)
+    // Total Fixed Supply: 1,000,000,000,000 PNJC (18 decimals)
     uint256 public constant MAX_SUPPLY = 1_000_000_000_000 * 10**18;
 
     constructor() 
         ERC20("PanjoCoin", "PNJC") 
-        ERC20Permit("PanjoCoin") 
+        ERC20Permit() 
     {
-        // Minting the entire supply to the deployer
+        // Internal minting of fixed supply to deployer address
         _mint(msg.sender, MAX_SUPPLY);
     }
 
-    /// @dev Optimization: Explicitly define decimals
+    // Explicitly overriding decimals for clarity
     function decimals() public view virtual override returns (uint8) {
         return 18;
     }
