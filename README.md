@@ -1,7 +1,5 @@
 # PanjoCoin Smart Contract (PNJC)
 
-# PanjoCoin Smart Contract (PNJC)
-
 This repository contains the official smart contract for **PanjoCoin (PNJC)** — a decentralized utility meme token deployed on the **Polygon** blockchain.
 
 ## Overview
