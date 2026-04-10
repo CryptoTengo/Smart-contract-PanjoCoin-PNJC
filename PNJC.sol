@@ -1,13 +1,17 @@
-// SPDX-License-Identifier: MIT
-// PanjoCoin (PNJC) - Optimized Flattened Version for Remix
-// Security Level: 10/10 | Audit-Ready | Zero-Admin
-// Compiler: 0.8.25 | EVM: Cancun | Optimization: 200
+/**
+ *Submitted for verification at polygonscan.com on 2026-04-04
+*/
 
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
 /**
- * @dev 1. All Standard Interfaces
+ * @title PanjoCoin (PNJC) - High-Fidelity Technical Refactor
+ * @notice A decentralized ERC-20 asset featuring automated Fair-Launch constraints.
+ * @dev Engineered for EVM Cancun. This contract implements a Zero-Admin architecture
+ * to eliminate centralization risks (No Mint, No Pause, No Blacklist).
  */
+
 interface IERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
@@ -25,31 +29,16 @@ interface IERC20Metadata is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-interface IERC20Errors {
-    error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed);
-    error ERC20InvalidSender(address sender);
-    error ERC20InvalidReceiver(address receiver);
-    error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed);
-    error ERC20InvalidApprover(address approver);
-    error ERC20InvalidSpender(address spender);
-}
-
-interface IERC20Permit {
-    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external;
-    function nonces(address owner) external view returns (uint256);
-    function DOMAIN_SEPARATOR() external view returns (bytes32);
-}
-
-/**
- * @dev 2. Context & Base Implementation
- */
 abstract contract Context {
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
 }
 
-abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
+/**
+ * @dev Standardized ERC-20 Logic (OpenZeppelin Derived)
+ */
+abstract contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;
 
@@ -88,40 +77,29 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
         return true;
     }
 
-    function _transfer(address from, address to, uint256 value) internal {
-        if (from == address(0)) revert ERC20InvalidSender(address(0));
-        if (to == address(0)) revert ERC20InvalidReceiver(address(0));
-        _update(from, to, value);
-    }
+    function _transfer(address from, address to, uint256 value) internal virtual {
+        require(from != address(0), "ERC20: transfer from zero");
+        require(to != address(0), "ERC20: transfer to zero");
 
-    function _update(address from, address to, uint256 value) internal virtual {
-        if (from == address(0)) {
-            _totalSupply += value;
-        } else {
-            uint256 fromBalance = _balances[from];
-            if (fromBalance < value) revert ERC20InsufficientBalance(from, fromBalance, value);
-            unchecked { _balances[from] = fromBalance - value; }
-        }
-
-        if (to == address(0)) {
-            unchecked { _totalSupply -= value; }
-        } else {
-            unchecked { _balances[to] += value; }
+        uint256 fromBalance = _balances[from];
+        require(fromBalance >= value, "ERC20: insufficient balance");
+        unchecked {
+            _balances[from] = fromBalance - value;
+            _balances[to] += value;
         }
         emit Transfer(from, to, value);
     }
 
     function _mint(address account, uint256 value) internal {
-        _update(address(0), account, value);
+        require(account != address(0), "ERC20: mint to zero");
+        _totalSupply += value;
+        unchecked { _balances[account] += value; }
+        emit Transfer(address(0), account, value);
     }
 
-    function _burn(address account, uint256 value) internal {
-        _update(account, address(0), value);
-    }
-
-    function _approve(address owner, address spender, uint256 value) internal {
-        if (owner == address(0)) revert ERC20InvalidApprover(address(0));
-        if (spender == address(0)) revert ERC20InvalidSpender(address(0));
+    function _approve(address owner, address spender, uint256 value) internal virtual {
+        require(owner != address(0), "ERC20: approve from zero");
+        require(spender != address(0), "ERC20: approve to zero");
         _allowances[owner][spender] = value;
         emit Approval(owner, spender, value);
     }
@@ -129,85 +107,55 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
     function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
         uint256 currentAllowance = allowance(owner, spender);
         if (currentAllowance != type(uint256).max) {
-            if (currentAllowance < value) revert ERC20InsufficientAllowance(spender, currentAllowance, value);
+            require(currentAllowance >= value, "ERC20: insufficient allowance");
             unchecked { _approve(owner, spender, currentAllowance - value); }
         }
     }
 }
 
 /**
- * @dev 3. Extensions (Burnable & Permit)
+ * @dev Final Implementation with Fair-Launch Restrictions.
  */
-abstract contract ERC20Burnable is ERC20 {
-    function burn(uint256 value) public virtual {
-        _burn(_msgSender(), value);
-    }
-    function burnFrom(address account, uint256 value) public virtual {
-        _spendAllowance(account, _msgSender(), value);
-        _burn(account, value);
-    }
-}
-
-abstract contract ERC20Permit is ERC20, IERC20Permit {
-    mapping(address => uint256) private _nonces;
-    bytes32 private immutable _PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
-    bytes32 private immutable _cachedDomainSeparator;
-    uint256 private immutable _cachedChainId;
-
-    constructor() {
-        _cachedChainId = block.chainid;
-        _cachedDomainSeparator = _buildDomainSeparator();
-    }
-
-    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public virtual {
-        require(block.timestamp <= deadline, "ERC20Permit: expired deadline");
-        require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0, "ERC20Permit: invalid s value");
-
-        bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));
-        bytes32 hash = keccak256(abi.encodePacked("\x19\x01", DOMAIN_SEPARATOR(), structHash));
-        address signer = ecrecover(hash, v, r, s);
-        
-        require(signer != address(0) && signer == owner, "ERC20Permit: invalid signature");
-        _approve(owner, spender, value);
-    }
-
-    function nonces(address owner) public view virtual returns (uint256) { return _nonces[owner]; }
-    function DOMAIN_SEPARATOR() public view virtual returns (bytes32) {
-        return block.chainid == _cachedChainId ? _cachedDomainSeparator : _buildDomainSeparator();
-    }
-    function _useNonce(address owner) internal virtual returns (uint256) {
-        unchecked { return _nonces[owner]++; }
-    }
-    function _buildDomainSeparator() private view returns (bytes32) {
-        return keccak256(abi.encode(
-            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-            keccak256(bytes(name())),
-            keccak256(bytes("1")),
-            block.chainid,
-            address(this)
-        ));
-    }
-}
-
-/**
- * @title PanjoCoin (PNJC)
- * @dev 4. Final Deployable Contract
- */
-contract PanjoCoin is ERC20, ERC20Burnable, ERC20Permit {
+contract PanjoCoin is ERC20 {
     
-    // Total Fixed Supply: 1,000,000,000,000 PNJC (18 decimals)
-    uint256 public constant MAX_SUPPLY = 1_000_000_000_000 * 10**18;
+    // Constant parameters to optimize gas consumption
+    uint256 private constant _MAX_SUPPLY = 1_000_000_000_000 * 10**18;
+    uint256 public constant MAX_TX_LIMIT = _MAX_SUPPLY / 200;      // 0.5% Anti-Dump
+    uint256 public constant MAX_WALLET_LIMIT = _MAX_SUPPLY / 100;  // 1.0% Anti-Whale
+    uint256 public constant TRADE_COOLDOWN = 30 seconds;           // Anti-Bot latency
 
-    constructor() 
-        ERC20("PanjoCoin", "PNJC") 
-        ERC20Permit() 
-    {
-        // Internal minting of fixed supply to deployer address
-        _mint(msg.sender, MAX_SUPPLY);
+    address public immutable deployer;
+    uint256 public immutable launchTimestamp;
+    mapping(address => uint256) private _lastAction;
+
+    constructor() ERC20("PanjoCoin", "PNJC") {
+        deployer = msg.sender;
+        launchTimestamp = block.timestamp;
+        _mint(msg.sender, _MAX_SUPPLY);
     }
 
-    // Explicitly overriding decimals for clarity
-    function decimals() public view virtual override returns (uint8) {
-        return 18;
+    /**
+     * @notice Internal transfer override to enforce temporal constraints.
+     * @dev Restrictions automatically expire 24 hours post-deployment.
+     * The deployer is excluded from constraints to facilitate initial liquidity seeding.
+     */
+    function _transfer(address from, address to, uint256 amount) internal override {
+        // Enforce Fair-Launch logic for the initial 24-hour window
+        if (block.timestamp < launchTimestamp + 24 hours && from != deployer && to != deployer) {
+            
+            // Transaction Velocity Guard
+            require(amount <= MAX_TX_LIMIT, "FairLaunch: Amount exceeds MAX_TX_LIMIT");
+            
+            // Saturation Guard (Wallet Cap)
+            if (to != address(this)) {
+                require(balanceOf(to) + amount <= MAX_WALLET_LIMIT, "FairLaunch: Wallet exceeds MAX_WALLET_LIMIT");
+            }
+
+            // High-Frequency Trading (HFT) / Bot Mitigation
+            require(block.timestamp >= _lastAction[from] + TRADE_COOLDOWN, "FairLaunch: Cooldown active");
+            _lastAction[from] = block.timestamp;
+        }
+
+        super._transfer(from, to, amount);
     }
 }
