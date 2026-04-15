@@ -9,7 +9,7 @@ PanjoCoin (PNJC) is an ERC-20 token deployed on the Polygon network, designed as
 - transparent tokenomics  
 - immutable smart contract architecture  
 
-The project connects on-chain activity with off-chain social impact through the **ClownCare initiative (SmileDonate, Georgia)**, supporting pediatric emotional care programs.
+The project connects on-chain activity with off-chain social impact through the **ClownCare initiative (SmileDonate, Georgia,Tbilisi)**, supporting pediatric emotional care programs.
 
 ---
 
