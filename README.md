@@ -192,15 +192,23 @@ PNJC operates at the intersection of:
 
 ## ⚠️ Legal Disclaimer
 
-PNJC is a decentralized utility token designed for cultural and ecosystem participation purposes.
+PanjoCoin (PNJC) is a decentralized ERC-20 utility token deployed on the Polygon blockchain. It is designed for cultural participation, community engagement, and ecosystem utility within a Web3 environment.
 
-It does not represent:
+PNJC does not constitute:
 
-- an investment product  
-- a financial instrument  
-- or any promise of returns  
+- a security, investment contract, or financial instrument under any jurisdiction  
+- an offer or solicitation to buy, sell, or hold any financial product  
+- a promise or guarantee of profit, return, yield, or token value appreciation  
 
-No guarantees of value appreciation, profit, or financial performance are made or implied.
+No part of this project, including its documentation, communications, or smart contract logic, should be interpreted as financial, investment, or legal advice.
+
+Users interact with the PNJC ecosystem at their own risk. Participation in decentralized networks involves inherent technological, market, and regulatory risks, including but not limited to loss of funds, smart contract vulnerabilities, and market volatility.
+
+The development team, contributors, and affiliated entities make no warranties, express or implied, regarding the functionality, security, or continued availability of the protocol.
+
+Nothing in this repository creates any fiduciary duty, partnership, joint venture, or agency relationship between users and project contributors.
+
+Users are solely responsible for ensuring compliance with applicable laws and regulations in their jurisdiction before interacting with the PNJC token or related ecosystem components.
 
 ---
 
