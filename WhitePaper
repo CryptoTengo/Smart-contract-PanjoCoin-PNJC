@@ -1,0 +1,116 @@
+White Paper: PanjoCoin (PNJC)              
+“Laughter heals. PNJC empowers.” A Decentralized Charity Protocol on Polygon 
+
+
+Chapter 1: Introduction & Mission
+1.1 A New Era of Social Responsibility
+By 2026, the cryptocurrency market demands real utility and tangible impact.
+PanjoCoin (PNJC) is a utility-driven meme token designed to address a fundamental issue: the lack of transparency and efficiency in funding social initiatives.
+We combine the viral nature of meme culture with the transparency of blockchain technology to support real-world humanitarian causes.
+1.2 Our Mission
+To establish sustainable and transparent funding for the ClownCare medical clowning program operated by the Smiledonate Foundation in Tbilisi.
+We believe Web3 technologies can transform charity from one-time donations into a self-sustaining economic ecosystem.
+________________________________________
+Chapter 2: The Legend of Panjo
+2.1 The Story of a Kind Shar-Pei
+In the heart of Tbilisi lived an extraordinary Shar-Pei named Panjo.
+While other dogs chased cats, Panjo had a unique gift — he could sense when children were sad.
+One day, he wandered into a children’s hospital garden and began amusingly wrinkling his nose, clumsily chasing sunbeams.
+A little girl, who hadn’t smiled in weeks, laughed for the first time.
+2.2 A Symbol of Hope
+Doctors called it the “Panjo Effect.”
+This Shar-Pei became the first “four-legged clown,” whose presence brought relief beyond medicine.
+PNJC is the digital embodiment of Panjo, scaling his kindness across thousands of hospital rooms simultaneously through blockchain technology.
+________________________________________
+Chapter 3: Social Utility — ClownCare
+3.1 The Science of Joy
+Laughter therapy is a medically recognized method shown to reduce cortisol levels in children by 30–40%.
+The ClownCare program funds professional medical clowns who help children cope with difficult treatments.
+3.2 Support Mechanism
+PNJC is not just a meme — every ecosystem transaction (liquidity, NFTs, etc.) contributes value to the foundation.
+Token holders gain access to On-chain Proof of Charity, where every donated lari is verifiable on the Polygon blockchain.
+________________________________________
+Chapter 4: Technical Architecture & Security
+4.1 Polygon Network (Layer-2)
+Polygon was selected to enable scalable charitable transactions:
+•	Speed: Near-instant transaction confirmation
+•	Cost-efficiency: Fees below $0.01, enabling micro-donations
+•	Sustainability: Proof-of-Stake minimizes environmental impact
+4.2 Security (OpenZeppelin Standard)
+The PNJC smart contract is built using OpenZeppelin, the industry-standard framework.
+•	The code is immutable (non-upgradable)
+•	No post-deployment interference is possible
+________________________________________
+Chapter 5: Smart Contract Overview
+5.1 PNJC Parameters
+•	Total Supply: 1,000,000,000,000 (Fixed)
+•	No Mint Function: Supply cannot be increased
+•	Zero Tax: 0% buy/sell fees — ideal for exchanges and DeFi aggregators
+5.2 Renounced Control
+The contract has no owner role, ensuring:
+•	No ability to freeze user funds
+•	No rule changes post-deployment
+PNJC is fully owned by the community and the blockchain itself.
+________________________________________
+Chapter 6: Tokenomics — 1 Trillion Allocation
+6.1 Distribution
+Sector	Share	Amount
+Liquidity (DEX)	50%	500B PNJC
+Marketing & Operations	12%	120B PNJC
+Team	10%	100B PNJC
+Community Grants	10%	100B PNJC
+Founder	5%	50B PNJC
+Merkle Airdrop	5%	50B PNJC
+Smiledonate Reserve	5%	50B PNJC
+Social Rewards	3%	30B PNJC
+________________________________________
+Chapter 7: Protection Mechanisms & Vesting
+7.1 Liquidity Protection
+50% of the supply is locked via Unicrypt, making a rug pull technically impossible.
+7.2 Vesting Schedule
+•	Team & founder tokens:
+o	12-month lock (cliff)
+o	Followed by 24-month linear vesting
+This structure ensures long-term commitment.
+________________________________________
+Chapter 8: Ecosystem — GameFi & ONE+
+8.1 ONE+ Platform
+PNJC will serve as the primary currency in the ONE+ social ecosystem, enabling users to:
+•	Purchase digital status items
+•	Send gifts
+•	Support the foundation
+8.2 Game Mechanics
+Development of Play-to-Earn mini-games, where players act as Panjo delivering joy to children.
+A portion of game revenue is automatically allocated to the Smiledonate Foundation.
+________________________________________
+Chapter 9: NFT Strategy — Panjo Charity Pass
+9.1 Philanthropy 2.0
+NFT holders gain DAO voting rights, allowing them to decide which hospitals in Tbilisi receive funding.
+9.2 NFT Utility
+•	Reward multipliers within the ecosystem
+•	Access to exclusive ClownCare content
+________________________________________
+Chapter 10: Roadmap 2026–2027
+https://www.youtube.com/@CryptoTengo ________________________________________
+Chapter 11: Team & Partners
+11.1 Execution
+The project is led by developers, including Tengo Kalandia, in partnership with the founders of the Smiledonate Foundation.
+This ensures a strong combination of technical expertise and real-world social impact experience.
+________________________________________
+Chapter 12: Conclusion & FAQ
+12.1 Summary
+PanjoCoin proves that blockchain can deliver not only profit — but purpose.
+We are building a transparent future where technology protects what matters most:
+children’s smiles.
+12.2 Contacts
+•	Web: https://www.cryptotengo.com
+•	E-mail: cryptotengo@proton.me
+•	Contract: https://polygonscan.com/address/0x771dBcAC21897dEE70780B10aCe30Bc4eCDfa251#code	Community: 
+•	Facebook: cryptotengo	
+•	Instagram: @crypto.tengo 
+•	Telegram:  @CryptoTengo		
+•	X (Twitter): @cryptotengo
+•	TikTok: @cryptotengo
+•	Discord: @CryptoTengo
+•	Youtube:@CryptoTengo
+“Join Panjo. Let’s make the world kinder — together.”
