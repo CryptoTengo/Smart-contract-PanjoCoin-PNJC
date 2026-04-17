@@ -1,128 +1,225 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-/**
- * @title PanjoCoin (PNJC)
- * @author ClownCare (Charity Fund Smiledonate, Georgia)
- * @notice A finalized, fixed-supply ERC-20 utility token.
- * * INVESTMENT SUMMARY:
- * 1. FIXED TOTAL SUPPLY: The supply is capped at 1 Trillion PNJC. No inflation mechanism exists.
- * 2. RENOUNCED CONTROL: No 'Owner' or 'Admin' roles. The contract is immutable upon deployment.
- * 3. ZERO TAX POLICY: No hidden fees, reflection taxes, or transaction penalties.
- * 4. PURE COMPLIANCE: Adheres strictly to the EIP-20 standard for maximum DEX/CEX compatibility.
- */
+/*//////////////////////////////////////////////////////////////
+                     INTERFACES & BASE LOGIC
+//////////////////////////////////////////////////////////////*/
 
+/**
+ * @dev Interface of the ERC20 standard as defined in the EIP.
+ */
 interface IERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
-    function transfer(address recipient, uint256 amount) external returns (bool);
+    function transfer(address to, uint256 amount) external returns (bool);
     function allowance(address owner, address spender) external view returns (uint256);
     function approve(address spender, uint256 amount) external returns (bool);
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-contract PanjoCoin is IERC20 {
-    // --- Token Metadata ---
-    string public constant name = "PanjoCoin";
-    string public constant symbol = "PNJC";
-    uint8 public constant decimals = 18;
+/**
+ * @dev Interface for the optional metadata functions from the ERC20 standard.
+ */
+interface IERC20Metadata is IERC20 {
+    function name() external view returns (string memory);
+    function symbol() external view returns (string memory);
+    function decimals() external view returns (uint8);
+}
 
-    // --- State Variables ---
-    mapping(address => uint256) private _balances;
-    mapping(address => mapping(address => uint256)) private _allowances;
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+}
 
-    // Fixed Supply: 1,000,000,000,000 tokens (scaled by 10^18)
-    uint256 private constant _TOTAL_SUPPLY = 1_000_000_000_000 * 10**18;
+/*//////////////////////////////////////////////////////////////
+                         EIP-712 & PERMIT
+//////////////////////////////////////////////////////////////*/
 
-    /**
-     * @dev Sets the initial distribution upon deployment.
-     * @param distributionWallet The address designated to receive the total token supply.
-     */
-    constructor(address distributionWallet) {
-        require(distributionWallet != address(0), "PNJC: Invalid distribution address");
+/**
+ * @dev Implementation of the EIP712 domain separator for signed typed data.
+ */
+abstract contract EIP712 {
+    bytes32 private immutable _DOMAIN_SEPARATOR;
+    uint256 private immutable _CACHED_CHAIN_ID;
 
-        _balances[distributionWallet] = _TOTAL_SUPPLY;
-        emit Transfer(address(0), distributionWallet, _TOTAL_SUPPLY);
+    constructor(string memory name, string memory version) {
+        _CACHED_CHAIN_ID = block.chainid;
+        _DOMAIN_SEPARATOR = _buildDomainSeparator(name, version);
     }
 
-    // --- Core ERC20 Logic ---
-
-    /**
-     * @notice Returns the total token supply.
-     */
-    function totalSupply() public pure override returns (uint256) {
-        return _TOTAL_SUPPLY;
+    function _buildDomainSeparator(string memory name, string memory version) private view returns (bytes32) {
+        return keccak256(
+            abi.encode(
+                keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+                keccak256(bytes(name)),
+                keccak256(bytes(version)),
+                block.chainid,
+                address(this)
+            )
+        );
     }
 
     /**
-     * @notice Returns the token balance of a specific address.
+     * @dev Returns the domain separator for the current chain.
      */
-    function balanceOf(address account) public view override returns (uint256) {
-        return _balances[account];
+    function DOMAIN_SEPARATOR() public view returns (bytes32) {
+        return block.chainid == _CACHED_CHAIN_ID ? _DOMAIN_SEPARATOR : _buildDomainSeparator("PanjoCoin", "1");
     }
+}
+
+/*//////////////////////////////////////////////////////////////
+                        MAIN ERC20 LOGIC
+//////////////////////////////////////////////////////////////*/
+
+contract PanjoCoin is Context, IERC20, IERC20Metadata, EIP712 {
+    mapping(address => uint256) internal _balances;
+    mapping(address => mapping(address => uint256)) internal _allowances;
+    mapping(address => uint256) public nonces;
+
+    uint256 private _totalSupply;
+    
+    // Token Constants
+    string private constant _NAME = "PanjoCoin";
+    string private constant _SYMBOL = "PNJC";
+    uint256 public constant MAX_SUPPLY = 1_000_000_000_000 * 10**18;
+
+    // EIP-2612 Permit Typehash
+    bytes32 private constant PERMIT_TYPEHASH = 
+        keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+
+    event Burn(address indexed from, uint256 amount);
+    event InitialDistribution(address indexed wallet, uint256 amount);
 
     /**
-     * @notice Transfers tokens from the caller's address to a recipient.
+     * @dev Sets the initial supply and assigns it to the distribution wallet.
+     * @param distributionWallet The address receiving the total supply.
      */
-    function transfer(address recipient, uint256 amount) public override returns (bool) {
-        _transfer(msg.sender, recipient, amount);
+    constructor(address distributionWallet) EIP712(_NAME, "1") {
+        require(distributionWallet != address(0), "INVALID_WALLET");
+
+        _totalSupply = MAX_SUPPLY;
+        _balances[distributionWallet] = MAX_SUPPLY;
+
+        emit Transfer(address(0), distributionWallet, MAX_SUPPLY);
+        emit InitialDistribution(distributionWallet, MAX_SUPPLY);
+    }
+
+    /*--- Standard Getters ---*/
+
+    function name() public pure override returns (string memory) { return _NAME; }
+    function symbol() public pure override returns (string memory) { return _SYMBOL; }
+    function decimals() public pure override returns (uint8) { return 18; }
+    function totalSupply() public view override returns (uint256) { return _totalSupply; }
+    function balanceOf(address account) public view override returns (uint256) { return _balances[account]; }
+
+    /**
+     * @dev Basic transfer function.
+     */
+    function transfer(address to, uint256 amount) public override returns (bool) {
+        _transfer(_msgSender(), to, amount);
         return true;
     }
 
-    /**
-     * @notice Checks the amount of tokens a spender is authorized to use on behalf of an owner.
-     */
     function allowance(address owner, address spender) public view override returns (uint256) {
         return _allowances[owner][spender];
     }
 
     /**
-     * @notice Approves a spender to transfer a specific amount of tokens.
+     * @dev Approval mechanism for third-party spending.
      */
     function approve(address spender, uint256 amount) public override returns (bool) {
-        _approve(msg.sender, spender, amount);
+        _approve(_msgSender(), spender, amount);
         return true;
     }
 
     /**
-     * @notice Executes a transfer on behalf of a user, given prior approval.
+     * @dev Transfer from one account to another using the allowance mechanism.
      */
-    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
-        _transfer(sender, recipient, amount);
-
-        uint256 currentAllowance = _allowances[sender][msg.sender];
-        require(currentAllowance >= amount, "ERC20: transfer amount exceeds allowance");
-        
-        unchecked {
-            _approve(sender, msg.sender, currentAllowance - amount);
+    function transferFrom(address from, address to, uint256 amount) public override returns (bool) {
+        uint256 currentAllowance = _allowances[from][_msgSender()];
+        if (currentAllowance != type(uint256).max) {
+            require(currentAllowance >= amount, "ALLOWANCE_LOW");
+            unchecked {
+                _approve(from, _msgSender(), currentAllowance - amount);
+            }
         }
-
+        _transfer(from, to, amount);
         return true;
     }
 
-    // --- Internal Operations ---
+    /*--- Permit (EIP-2612) ---*/
 
-    function _transfer(address sender, address recipient, uint256 amount) internal {
-        require(sender != address(0), "ERC20: transfer from zero address");
-        require(recipient != address(0), "ERC20: transfer to zero address");
+    /**
+     * @dev Allows gasless approval via EIP-712 signatures.
+     */
+    function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(block.timestamp <= deadline, "PERMIT_EXPIRED");
 
-        uint256 senderBalance = _balances[sender];
-        require(senderBalance >= amount, "ERC20: transfer amount exceeds balance");
+        uint256 nonce;
+        unchecked {
+            nonce = nonces[owner]++;
+        }
+
+        bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonce, deadline));
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", DOMAIN_SEPARATOR(), structHash));
+
+        address signer = ecrecover(digest, v, r, s);
+        require(signer != address(0) && signer == owner, "INVALID_SIGNATURE");
+
+        _approve(owner, spender, value);
+    }
+
+    /*--- Token Burning ---*/
+
+    /**
+     * @dev Permanently destroys 'amount' of tokens from the caller's balance.
+     */
+    function burn(uint256 amount) external {
+        address account = _msgSender();
+        uint256 accountBalance = _balances[account];
+        require(accountBalance >= amount, "BURN_EXCEEDS_BALANCE");
 
         unchecked {
-            _balances[sender] = senderBalance - amount;
+            _balances[account] = accountBalance - amount;
+            _totalSupply -= amount;
         }
-        _balances[recipient] += amount;
 
-        emit Transfer(sender, recipient, amount);
+        emit Burn(account, amount);
+        emit Transfer(account, address(0), amount);
+    }
+
+    /*--- Internal Helpers ---*/
+
+    function _transfer(address from, address to, uint256 amount) internal {
+        require(from != address(0), "FROM_ZERO");
+        require(to != address(0), "TO_ZERO");
+
+        uint256 fromBalance = _balances[from];
+        require(fromBalance >= amount, "TRANSFER_EXCEEDS_BALANCE");
+
+        unchecked {
+            _balances[from] = fromBalance - amount;
+        }
+        _balances[to] += amount;
+
+        emit Transfer(from, to, amount);
     }
 
     function _approve(address owner, address spender, uint256 amount) internal {
-        require(owner != address(0), "ERC20: approve from zero address");
-        require(spender != address(0), "ERC20: approve to zero address");
+        require(owner != address(0), "OWNER_ZERO");
+        require(spender != address(0), "SPENDER_ZERO");
 
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
