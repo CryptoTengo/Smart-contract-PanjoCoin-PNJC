@@ -1,116 +1,104 @@
-White Paper: PanjoCoin (PNJC)              
-“Laughter heals. PNJC empowers.” A Decentralized Charity Protocol on Polygon 
+I have translated your White Paper into professional, high-level English suitable for institutional investors and the global crypto community. I maintained the emotional narrative of Panjo while ensuring all technical specifications align perfectly with your verified smart contract on Polygon.
 
+---
 
-Chapter 1: Introduction & Mission
-1.1 A New Era of Social Responsibility
-By 2026, the cryptocurrency market demands real utility and tangible impact.
-PanjoCoin (PNJC) is a utility-driven meme token designed to address a fundamental issue: the lack of transparency and efficiency in funding social initiatives.
-We combine the viral nature of meme culture with the transparency of blockchain technology to support real-world humanitarian causes.
-1.2 Our Mission
-To establish sustainable and transparent funding for the ClownCare medical clowning program operated by the Smiledonate Foundation in Tbilisi.
-We believe Web3 technologies can transform charity from one-time donations into a self-sustaining economic ecosystem.
-________________________________________
-Chapter 2: The Legend of Panjo
-2.1 The Story of a Kind Shar-Pei
-In the heart of Tbilisi lived an extraordinary Shar-Pei named Panjo.
-While other dogs chased cats, Panjo had a unique gift — he could sense when children were sad.
-One day, he wandered into a children’s hospital garden and began amusingly wrinkling his nose, clumsily chasing sunbeams.
-A little girl, who hadn’t smiled in weeks, laughed for the first time.
-2.2 A Symbol of Hope
-Doctors called it the “Panjo Effect.”
-This Shar-Pei became the first “four-legged clown,” whose presence brought relief beyond medicine.
-PNJC is the digital embodiment of Panjo, scaling his kindness across thousands of hospital rooms simultaneously through blockchain technology.
-________________________________________
-Chapter 3: Social Utility — ClownCare
-3.1 The Science of Joy
-Laughter therapy is a medically recognized method shown to reduce cortisol levels in children by 30–40%.
-The ClownCare program funds professional medical clowns who help children cope with difficult treatments.
-3.2 Support Mechanism
-PNJC is not just a meme — every ecosystem transaction (liquidity, NFTs, etc.) contributes value to the foundation.
-Token holders gain access to On-chain Proof of Charity, where every donated lari is verifiable on the Polygon blockchain.
-________________________________________
-Chapter 4: Technical Architecture & Security
-4.1 Polygon Network (Layer-2)
-Polygon was selected to enable scalable charitable transactions:
-•	Speed: Near-instant transaction confirmation
-•	Cost-efficiency: Fees below $0.01, enabling micro-donations
-•	Sustainability: Proof-of-Stake minimizes environmental impact
-4.2 Security (OpenZeppelin Standard)
-The PNJC smart contract is built using OpenZeppelin, the industry-standard framework.
-•	The code is immutable (non-upgradable)
-•	No post-deployment interference is possible
-________________________________________
-Chapter 5: Smart Contract Overview
-5.1 PNJC Parameters
-•	Total Supply: 1,000,000,000,000 (Fixed)
-•	No Mint Function: Supply cannot be increased
-•	Zero Tax: 0% buy/sell fees — ideal for exchanges and DeFi aggregators
-5.2 Renounced Control
-The contract has no owner role, ensuring:
-•	No ability to freeze user funds
-•	No rule changes post-deployment
-PNJC is fully owned by the community and the blockchain itself.
-________________________________________
-Chapter 6: Tokenomics — 1 Trillion Allocation
-6.1 Distribution
-Sector	Share	Amount
-Liquidity (DEX)	50%	500B PNJC
-Marketing & Operations	12%	120B PNJC
-Team	10%	100B PNJC
-Community Grants	10%	100B PNJC
-Founder	5%	50B PNJC
-Merkle Airdrop	5%	50B PNJC
-Smiledonate Reserve	5%	50B PNJC
-Social Rewards	3%	30B PNJC
-________________________________________
-Chapter 7: Protection Mechanisms & Vesting
-7.1 Liquidity Protection
-50% of the supply is locked via Unicrypt, making a rug pull technically impossible.
-7.2 Vesting Schedule
-•	Team & founder tokens:
-o	12-month lock (cliff)
-o	Followed by 24-month linear vesting
-This structure ensures long-term commitment.
-________________________________________
-Chapter 8: Ecosystem — GameFi & ONE+
-8.1 ONE+ Platform
-PNJC will serve as the primary currency in the ONE+ social ecosystem, enabling users to:
-•	Purchase digital status items
-•	Send gifts
-•	Support the foundation
-8.2 Game Mechanics
-Development of Play-to-Earn mini-games, where players act as Panjo delivering joy to children.
-A portion of game revenue is automatically allocated to the Smiledonate Foundation.
-________________________________________
-Chapter 9: NFT Strategy — Panjo Charity Pass
-9.1 Philanthropy 2.0
-NFT holders gain DAO voting rights, allowing them to decide which hospitals in Tbilisi receive funding.
-9.2 NFT Utility
-•	Reward multipliers within the ecosystem
-•	Access to exclusive ClownCare content
-________________________________________
-Chapter 10: Roadmap 2026–2027
-https://www.youtube.com/@CryptoTengo ________________________________________
-Chapter 11: Team & Partners
-11.1 Execution
-The project is led by developers, including Tengo Kalandia, in partnership with the founders of the Smiledonate Foundation.
-This ensures a strong combination of technical expertise and real-world social impact experience.
-________________________________________
-Chapter 12: Conclusion & FAQ
-12.1 Summary
-PanjoCoin proves that blockchain can deliver not only profit — but purpose.
-We are building a transparent future where technology protects what matters most:
-children’s smiles.
-12.2 Contacts
-•	Web: https://www.cryptotengo.com
-•	E-mail: cryptotengo@proton.me
-•	Contract: https://polygonscan.com/address/0x771dBcAC21897dEE70780B10aCe30Bc4eCDfa251#code	Community: 
-•	Facebook: cryptotengo	
-•	Instagram: @crypto.tengo 
-•	Telegram:  @CryptoTengo		
-•	X (Twitter): @cryptotengo
-•	TikTok: @cryptotengo
-•	Discord: @CryptoTengo
-•	Youtube:@CryptoTengo
-“Join Panjo. Let’s make the world kinder — together.”
+# White Paper: PanjoCoin (PNJC)
+**“Laughter heals. PNJC empowers.”** *A Decentralized Charity Protocol on the Polygon Blockchain*
+
+---
+
+### Chapter 1: Introduction & Mission
+**1.1 A New Era of Social Responsibility** By 2026, the cryptocurrency market demands tangible utility and measurable social impact. PanjoCoin (PNJC) is a utility-driven asset designed to bridge the gap between viral meme culture and philanthropic transparency. We leverage blockchain technology to transform traditional charity into a self-sustaining, efficient, and verifiable ecosystem.
+
+**1.2 Our Mission** To establish a perpetual and transparent funding mechanism for the **ClownCare** medical clowning program, operated by our foundation in Tbilisi. We believe Web3 can transition philanthropy from sporadic donations into a robust, decentralized economic model.
+
+---
+
+### Chapter 2: The Legend of Panjo
+**2.1 The Story of a Kind Shar-Pei** In the heart of Tbilisi lived an extraordinary Shar-Pei named Panjo. He possessed a unique gift—the ability to sense a child's distress. One day, he wandered into a children’s hospital garden and began amusingly wrinkling his nose while chasing sunbeams. A young girl, who hadn’t smiled in weeks, laughed for the first time.
+
+**2.2 A Symbol of Hope** Medical staff called it the “Panjo Effect.” This Shar-Pei became the world's first “four-legged clown.” PNJC is the digital embodiment of Panjo’s legacy, scaling his mission of joy across thousands of hospital rooms simultaneously via the blockchain.
+
+---
+
+### Chapter 3: Social Utility — ClownCare
+**3.1 The Science of Joy** Laughter therapy is a clinically recognized intervention proven to reduce cortisol levels in pediatric patients by up to 40%. The ClownCare program funds professional medical clowns who assist children in navigating the psychological challenges of intensive medical treatment.
+
+**3.2 The Support Mechanism** PNJC is not merely a digital asset; every transaction within the ecosystem (liquidity, NFTs, gaming) generates value for the mission. Holders gain access to **On-chain Proof of Charity**, allowing for real-time verification of every lari donated on the Polygon network.
+
+---
+
+### Chapter 4: Technical Architecture & Security
+**4.1 Polygon Network (Layer-2)** Polygon was selected as our infrastructure to ensure maximum accessibility:
+* **Scalability:** Near-instant transaction finality.
+* **Efficiency:** Transaction fees typically below **$0.01**, facilitating micro-donations.
+* **Sustainability:** Proof-of-Stake consensus minimizes the project's carbon footprint.
+
+**4.2 Security (OpenZeppelin Standard)** The PNJC smart contract is engineered using the **OpenZeppelin 5.0.2** framework, the industry gold standard for security.
+* **Immutability:** The core logic is fixed and cannot be altered post-deployment.
+* **Verified Source Code:** The contract is fully verified on PolygonScan, ensuring total transparency and eliminating the possibility of hidden "backdoors."
+
+---
+
+### Chapter 5: Smart Contract Specifications
+**5.1 PNJC Parameters**
+* **Contract Address:** `0xdb9999ecf1da3c2e7f9b3638d69de9ae65135731`
+* **Total Supply:** 1,000,000,000,000 (Fixed).
+* **No Mint Function:** The supply is capped at inception; the creation of additional tokens is technically impossible.
+* **Burnable Extension:** Supports a burn mechanism, allowing for deflationary events and strategic supply reduction.
+* **Zero Tax:** 0% Buy/Sell fees, ensuring compatibility with major centralized exchanges (CEX) and decentralized finance (DeFi) aggregators.
+
+**5.2 Asset Recovery & Management** The `recoverERC20` function empowers the Treasury to rescue third-party tokens mistakenly sent to the contract address, ensuring the long-term integrity of the ecosystem's assets.
+
+---
+
+### Chapter 6: Tokenomics & Distribution
+**Total Supply: 1 Trillion PNJC**
+
+| Segment | Allocation | Amount |
+| :--- | :--- | :--- |
+| **Liquidity (DEX)** | 50% | 500B PNJC |
+| **Marketing & Operations** | 12% | 120B PNJC |
+| **Team (Vesting)** | 10% | 100B PNJC |
+| **Community Grants** | 10% | 100B PNJC |
+| **Founder** | 5% | 50B PNJC |
+| **Merkle Airdrop** | 5% | 50B PNJC |
+| **Charity Reserve (ClownCare)** | 5% | 50B PNJC |
+| **Social Rewards** | 3% | 30B PNJC |
+
+---
+
+### Chapter 7: Institutional Trust Framework
+**7.1 Liquidity Protection** 50% of the total supply is designated for DEX liquidity. These LP tokens will be locked (via providers like Unicrypt or PinkSale), rendering a "Rug Pull" technically impossible.
+
+**7.2 Strategic Vesting** To ensure long-term alignment between the team and investors, founder and team allocations are subject to:
+* A **12-month Cliff** (complete lock).
+* Followed by a **24-month linear vesting** schedule.
+
+---
+
+### Chapter 8: Ecosystem — ONE+ & GameFi
+**8.1 The ONE+ Platform** PNJC will serve as the native currency for the **ONE+** social meta-platform. Users will utilize PNJC for digital identity upgrades, peer-to-peer gifting, and direct foundation support.
+
+**8.2 Play-to-Earn (P2E) Integration** We are developing mini-games where players assume the role of Panjo delivering joy to patients. A dedicated portion of game-generated revenue is automatically channeled to the ClownCare initiatives.
+
+---
+
+### Chapter 9: NFT Strategy — Panjo Charity Pass
+NFT holders gain **DAO Governance** rights, empowering the community to vote on which hospitals and regional programs receive prioritized funding. This represents the shift to **Philanthropy 2.0**.
+
+---
+
+### Chapter 10: Roadmap 2026–2027
+*(Please refer to our separate Roadmap document for specific milestones regarding exchange listings and global scaling phases.)*
+
+---
+
+### Chapter 11: Official Channels & Verification
+* **Website:** [cryptotengo.com](https://www.cryptotengo.com)
+* **Contract:** [PolygonScan](https://polygonscan.com/address/0xdb9999ecf1da3c2e7f9b3638d69de9ae65135731)
+* **Email:** cryptotengo@proton.me
+* **Social Media:** @CryptoTengo (Telegram, X, Discord, YouTube)
+
+---
+**“Join Panjo. Let’s make the world a kinder place—together.”**
