@@ -1,1 +1,156 @@
-🐾 PANJOCOIN (PNJC) WHITEPAPERThe Sovereign Manifesto of Digital Humanity Version 1.0 — April 20261. Executive SummaryPanjoCoin (PNJC) is a next-generation high-tech digital asset deployed on the Polygon (PoS) network. It represents a unique synthesis of Web3 viral meme culture and institutional social responsibility. While most memecoins lack intrinsic value, PNJC acts as a decentralized financial bridge between the crypto community and the real-world charity sector, specifically supporting medical clowning and pediatric care.2. The Legend: The Panjo EffectIn the heart of Tbilisi, Georgia, lives a Shar-Pei named Panjo. His presence at the Iashvili Children’s Central Referral Hospital has become legendary. In oncology wards, Panjo’s visits transform heavy silence into laughter, aiding in the psychological rehabilitation of children.The "Panjo Effect" is the foundation of this project: a mission to turn every digital transaction into a tangible smile for a child fighting a serious illness.3. Problem StatementThe 2026 crypto market faces a systemic crisis of trust:The Utility Void: 99% of memecoins are short-term speculative tools with zero physical impact.Security Risks: Predatory "honey-pots," hidden minting functions, and high sell taxes (10-50%) drain investor capital.Philanthropic Opacity: Traditional charity lacks real-time verification; funds are often lost to administrative overhead.4. The Solution: PNJC InfrastructurePanjoCoin solves these issues through a Triple-Pillar Model:Immutable Integrity: Ownership is Renounced. No human can alter the code or block balances.Zero-Friction Economy: 0% Buy/Sell Tax. This ensures maximum liquidity and attractiveness for Tier-1 exchange listings.On-Chain Altruism: Direct integration with the SmileDonate Charity Fund.5. Ecosystem & Product Suite5.1. ONE+ Meta-PlatformAn innovative Social-GameFi environment where users interact, play, and earn PNJC.Play-to-Care: Mini-games where Panjo helps children, rewarding players with PNJC.Creator Economy: Support for medical clowns and artists through direct PNJC donations.5.2. ClownCare BridgeA transparent reporting module that broadcasts fund distribution in real-time. Investors can see exactly how many hours of therapeutic clowning their support has provided.6. Tokenomics (The PNJC Model)Ticker: PNJCTotal Supply: 1,000,000,000,000 (1 Trillion)Network: Polygon (PoS)Standard: ERC-20 + EIP-2612 (Permit for gasless approvals)6.1. Distribution TableAllocationPercentageAmount (PNJC)Lock/VestingPublic Liquidity50%500,000,000,000Locked (6-12 Months)Team/Creator15%150,000,000,00024-Month Linear VestingTreasury12%120,000,000,0003/5 MultisigDAO Treasury10%100,000,000,000Governance LockedAirdrop5%50,000,000,000Merkle Tree ClaimCharity Reserve5%50,000,000,000Transparent Public WalletCommunity3%30,000,000,000Social Mining7. Technology & Security7.1. Smart Contract ArchitectureBuilt using OpenZeppelin 5.0.2 libraries.No Minting: The supply is hard-capped.Renounced Ownership: The onlyOwner functions are disabled post-deployment.EIP-2612: Supports gasless permit transactions, allowing new users to interact without holding MATIC for approvals.7.2. Audit StatusCode Verification: Fully verified on PolygonScan.Contract Address: 0xdc5FfF17ba1be96716DeB0684c6F78DA138f42908. Strategic RoadmapPhase 1: Genesis (Q2 2026)Smart Contract Deployment & Verification.Community Core Formation (TG/X/Discord).Merkle Airdrop for early supporters.Phase 2: Trust (Q3 2026)DEX Listings (Uniswap/QuickSwap).Liquidity Lock (Unicrypt).Tier-2 CEX Listings (MEXC/Gate.io).Phase 3: Expansion (Q4 2026)ONE+ Meta-Platform Beta Launch.ClownCare Bridge Live Dashboard."Panjo Pass" NFT Collection.Phase 4: Global Impact (2027)Tier-1 CEX Listings (Binance/OKX/Bybit).Global Charity Franchising (Expanding to SEA, Africa, and LATAM).9. Governance (Snapshot DAO)PNJC holders possess the power to:Vote on which hospitals receive funding.Direct marketing budgets and exchange listing priorities.Approve new GameFi mechanics for the ONE+ platform.10. The TeamThe project is led by Tengo Kalandia, Director of the SmileDonate fund with 11+ years of experience in pediatric clinical care. The team is Fully Doxxed, prioritizing reputation over anonymity to ensure institutional trust.11. Legal DisclaimerPanjoCoin (PNJC) is a utility token and does not constitute a security, financial instrument, or investment contract in any jurisdiction. Engagement with the PNJC ecosystem involves risk. Please consult with legal and financial advisors before participating.Official Contract Address (Polygon): 0xdc5FfF17ba1be96716DeB0684c6F78DA138f4290
+# 🐾 PANJOCOIN (PNJC) WHITEPAPER  
+## The Sovereign Manifesto of Digital Humanity  
+**Version 1.0 — April 2026**
+
+---
+
+## 1. Executive Summary
+
+PanjoCoin (PNJC) is a next-generation high-tech digital asset deployed on the Polygon (PoS) network.  
+It represents a unique synthesis of Web3 viral meme culture and institutional social responsibility.
+
+While most memecoins lack intrinsic value, PNJC acts as a decentralized financial bridge between the crypto community and the real-world charity sector, specifically supporting medical clowning and pediatric care.
+
+---
+
+## 2. The Legend: The Panjo Effect
+
+In the heart of Tbilisi, Georgia, lives a Shar-Pei named Panjo. His presence at the Iashvili Children’s Central Referral Hospital has become legendary.
+
+In oncology wards, Panjo’s visits transform heavy silence into laughter, aiding the psychological rehabilitation of children.
+
+**The "Panjo Effect"** is the foundation of this project:  
+a mission to turn every digital transaction into a tangible smile for a child fighting a serious illness.
+
+---
+
+## 3. Problem Statement
+
+The 2026 crypto market faces a systemic crisis of trust:
+
+- **The Utility Void:** 99% of memecoins are short-term speculative tools with zero physical impact.
+- **Security Risks:** Predatory "honey-pots," hidden minting functions, and high sell taxes (10–50%) drain investor capital.
+- **Philanthropic Opacity:** Traditional charity lacks real-time verification; funds are often lost to administrative overhead.
+
+---
+
+## 4. The Solution: PNJC Infrastructure
+
+PanjoCoin solves these issues through a **Triple-Pillar Model**:
+
+- **Immutable Integrity:** Ownership is renounced. No human can alter the code or block balances.
+- **Zero-Friction Economy:** 0% Buy/Sell Tax ensures maximum liquidity and exchange attractiveness.
+- **On-Chain Altruism:** Direct integration with the SmileDonate Charity Fund.
+
+---
+
+## 5. Ecosystem & Product Suite
+
+### 5.1 ONE+ Meta-Platform
+An innovative Social-GameFi environment where users interact, play, and earn PNJC.
+
+- **Play-to-Care:** Mini-games where Panjo helps children, rewarding players with PNJC.
+- **Creator Economy:** Support for medical clowns and artists through direct PNJC donations.
+
+### 5.2 ClownCare Bridge
+A transparent reporting module broadcasting fund distribution in real time.
+
+Investors can track exactly how many hours of therapeutic clowning their support has funded.
+
+---
+
+## 6. Tokenomics (The PNJC Model)
+
+- **Ticker:** PNJC  
+- **Total Supply:** 1,000,000,000,000 (1 Trillion)  
+- **Network:** Polygon (PoS)  
+- **Standard:** ERC-20 + EIP-2612 (Permit)
+
+### 6.1 Distribution
+
+| Allocation        | Percentage | Amount (PNJC)         | Notes |
+|------------------|------------|------------------------|------|
+| Public Liquidity  | 50%        | 500,000,000,000        | Locked (6–12 months) |
+| Team / Creator    | 15%        | 150,000,000,000        | 24-month linear vesting |
+| Treasury          | 12%        | 120,000,000,000        | 3/5 multisig |
+| DAO Treasury      | 10%        | 100,000,000,000        | Governance locked |
+| Airdrop           | 5%         | 50,000,000,000         | Merkle tree claim |
+| Charity Reserve   | 5%         | 50,000,000,000         | Transparent wallet |
+| Community         | 3%         | 30,000,000,000         | Social mining |
+
+---
+
+## 7. Technology & Security
+
+### 7.1 Smart Contract Architecture
+
+- Built using OpenZeppelin 5.0.2 libraries  
+- **No Minting:** Hard-capped supply  
+- **Renounced Ownership:** Post-deployment control disabled  
+- **EIP-2612:** Gasless approvals supported  
+
+---
+
+### 7.2 Audit Status
+
+- Code verified on PolygonScan  
+- Fully deployed and transparent  
+
+**Contract Address (Polygon):**  
+`0xdc5FfF17ba1be96716DeB0684c6F78DA138f42908`
+
+---
+
+## 8. Strategic Roadmap
+
+### Phase 1: Genesis (Q2 2026)
+- Smart contract deployment & verification  
+- Community core formation (TG / X / Discord)  
+- Merkle airdrop for early supporters  
+
+### Phase 2: Trust (Q3 2026)
+- DEX listings (Uniswap / QuickSwap)  
+- Liquidity lock (Unicrypt)  
+- Tier-2 CEX listings (MEXC / Gate.io)  
+
+### Phase 3: Expansion (Q4 2026)
+- ONE+ Meta-Platform beta launch  
+- ClownCare Bridge live dashboard  
+- "Panjo Pass" NFT collection  
+
+### Phase 4: Global Impact (2027)
+- Tier-1 CEX listings (Binance / OKX / Bybit)  
+- Global charity expansion (SEA, Africa, LATAM)  
+
+---
+
+## 9. Governance (Snapshot DAO)
+
+PNJC holders can:
+
+- Vote on hospital funding allocation  
+- Direct marketing and exchange listing priorities  
+- Approve GameFi mechanics for ONE+ platform  
+
+---
+
+## 10. The Team
+
+The project is led by **Tengo Kalandia**, Director of the SmileDonate fund, with 11+ years of experience in pediatric clinical care.
+
+The team is fully doxxed, prioritizing reputation and institutional trust.
+
+---
+
+## 11. Legal Disclaimer
+
+PanjoCoin (PNJC) is a utility token and does not constitute a security, financial instrument, or investment contract in any jurisdiction.
+
+Engagement with the PNJC ecosystem involves risk.  
+Please consult legal and financial advisors before participation.
+
+---
+
+## Official Contract Address (Polygon)
+
+`0xdc5FfF17ba1be96716DeB0684c6F78DA138f4290`
