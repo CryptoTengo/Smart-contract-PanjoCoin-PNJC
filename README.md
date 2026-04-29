@@ -1,5 +1,7 @@
 # 🚀 PanjoCoin (PNJC)
 
+https://polygon.blockscout.com/token/0xdc5FfF17ba1be96716DeB0684c6F78DA138f4290?tab=contract
+
 **A meme-native Web3 ecosystem token with real-world social utility.**
 
 PanjoCoin (PNJC) is an ERC-20 token deployed on the Polygon network, designed as a **cultural Web3 asset** that combines:
