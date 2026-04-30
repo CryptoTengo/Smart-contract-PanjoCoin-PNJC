@@ -227,11 +227,3 @@ This documentation is aligned with:
 * off-chain ecosystem architecture
 
 No claims are made beyond verifiable on-chain functionality or explicitly defined off-chain processes.
-
----
-
-Если хочешь следующий шаг, я могу сделать:
-
-* 🔧 **Binance/CEX listing README (ultra-simplified compliance version)**
-* 🧠 **VC pitch deck narrative (1-page fund-ready summary)**
-* 📊 **CertiK pre-audit package (full documentation bundle)**
