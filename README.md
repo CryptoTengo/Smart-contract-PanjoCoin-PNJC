@@ -42,7 +42,7 @@
 | **Symbol** | PNJC |
 | **Network** | Polygon Mainnet |
 | **Standard** | ERC-20 / ERC-2612 (Permit) |
-| **Total Supply** | 1,000,000,000 PNJC *(Fixed)* |
+| **Total Supply** | 1,000,000,000,000 PNJC *(Fixed)* |
 | **Decimals** | 18 |
 | **Contract Address** | `0x781C0d15347Cb0B94C42C65c7a67E70371205De5` |
 
