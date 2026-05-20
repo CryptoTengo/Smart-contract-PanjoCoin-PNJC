@@ -1,55 +1,84 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.24;
-
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+pragma solidity 0.8.34;
 
 /**
- * @title PNJC Institutional MultiSig Wallet v4
- * @notice Ultra-secure institutional multisignature wallet with integrated timelock and deadline protection.
- * @dev Designed for secure treasury management, token ownership, and DEX/CEX ecosystem readiness.
- * Integrates OpenZeppelin security primitives and strictly mitigates single-owner centralization risks.
- * 
- * SECURITY INVARIANTS (CertiK 100/100 Grade):
- * - N-of-M consensus required for ALL state changes (including code governance).
- * - Multi-step enforcement: Submit -> Confirm -> Timelock Delay -> Execute.
- * - Anti-duplicate owner checks enforced at constructor and runtime levels.
- * - Dynamic asset recovery and full compliance with complex ERC-20 return values.
- * - Transaction Expiry (Deadline) tracking to prevent execution of stale proposals.
+ * @title PNJCMultiSig
+ * @author PanjoCoin Engineering Team
+ * @notice Institutional-grade multi-signature wallet with timelock and transaction expiry.
+ *
+ * @dev SECURITY OVERVIEW
+ * ----------------------------------------------------------------------------
+ * This contract is designed to secure treasury assets, protocol ownership,
+ * and critical administrative privileges such as:
+ *
+ * - Ownership of ERC20 token contracts
+ * - Control of TimelockController
+ * - Management of treasury wallets
+ * - Control of fee routers and airdrop contracts
+ *
+ * Core security properties:
+ * - N-of-M consensus for all privileged actions
+ * - Configurable execution delay (timelock)
+ * - Transaction expiration protection
+ * - Reentrancy protection
+ * - Full on-chain audit trail
+ * - Self-governed owner management
+ *
+ * Recommended production setup:
+ * - Owners: 3 to 7 trusted signers
+ * - Required confirmations: majority (e.g. 3-of-5)
+ * - Timelock: 24 to 72 hours
+ *
+ * AUDIT INVARIANTS
+ * ----------------------------------------------------------------------------
+ * 1. No transaction can execute without `required` confirmations.
+ * 2. No transaction can execute before `delay` has elapsed.
+ * 3. No transaction can execute after expiration.
+ * 4. Owners can only be added/removed through the multisig itself.
+ * 5. Confirmation threshold is always between 1 and owner count.
+ * 6. Executed transactions can never be executed twice.
  */
-contract PNJCMultiSigV4 is ReentrancyGuard {
 
-    // ==========================================
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+
+contract PNJCMultiSig is ReentrancyGuard {
+    // =========================================================================
     // CONSTANTS
-    // ==========================================
-    
-    /// @notice Maximum lifespan of a proposed transaction to prevent execution of stale operations.
+    // =========================================================================
+
+    /// @notice Maximum time a submitted transaction remains valid.
     uint256 public constant VALIDITY_PERIOD = 14 days;
 
-    // ==========================================
+    // =========================================================================
     // ERRORS
-    // ==========================================
+    // =========================================================================
 
     error NotOwner();
-    error OnlyWalletItself();
-    error TxNotFound();
-    error TxExecuted();
-    error TxExpired();
-    error TxAlreadyConfirmed();
-    error TxNotConfirmed();
-    error InvalidRequirement();
+    error OnlyWallet();
     error ZeroAddress();
+    error InvalidRequirement();
     error OwnerAlreadyExists();
     error OwnerDoesNotExist();
+
+    error TransactionNotFound();
+    error TransactionAlreadyExecuted();
+    error TransactionExpired();
+    error TransactionAlreadyConfirmed();
+    error TransactionNotConfirmed();
+
+    error InsufficientConfirmations();
     error ExecutionTooEarly();
     error ExecutionFailed();
 
-    // ==========================================
+    // =========================================================================
     // EVENTS
-    // ==========================================
+    // =========================================================================
 
-    event Deposit(address indexed sender, uint256 value);
-    
-    event SubmitTransaction(
+    /// @notice Emitted when the wallet receives native currency.
+    event Deposit(address indexed sender, uint256 amount, uint256 balance);
+
+    /// @notice Emitted when a new transaction is submitted.
+    event TransactionSubmitted(
         address indexed owner,
         uint256 indexed txId,
         address indexed to,
@@ -57,18 +86,30 @@ contract PNJCMultiSigV4 is ReentrancyGuard {
         bytes data
     );
 
-    event ConfirmTransaction(address indexed owner, uint256 indexed txId);
-    event RevokeConfirmation(address indexed owner, uint256 indexed txId);
-    event ExecuteTransaction(address indexed owner, uint256 indexed txId);
-    
-    event OwnerAdded(address indexed newOwner);
-    event OwnerRemoved(address indexed removedOwner);
-    event RequirementChanged(uint256 required);
-    event TimelockChanged(uint256 delay);
+    /// @notice Emitted when an owner confirms a transaction.
+    event TransactionConfirmed(address indexed owner, uint256 indexed txId);
 
-    // ==========================================
-    // STORAGE STRUCTS & VARIABLES
-    // ==========================================
+    /// @notice Emitted when an owner revokes a confirmation.
+    event ConfirmationRevoked(address indexed owner, uint256 indexed txId);
+
+    /// @notice Emitted when a transaction is executed.
+    event TransactionExecuted(address indexed executor, uint256 indexed txId);
+
+    /// @notice Emitted when a new owner is added.
+    event OwnerAdded(address indexed owner);
+
+    /// @notice Emitted when an owner is removed.
+    event OwnerRemoved(address indexed owner);
+
+    /// @notice Emitted when the confirmation threshold changes.
+    event RequirementChanged(uint256 newRequirement);
+
+    /// @notice Emitted when the timelock delay changes.
+    event TimelockChanged(uint256 newDelay);
+
+    // =========================================================================
+    // STRUCTS
+    // =========================================================================
 
     struct Transaction {
         address to;
@@ -76,108 +117,119 @@ contract PNJCMultiSigV4 is ReentrancyGuard {
         bytes data;
         bool executed;
         uint256 confirmations;
-        uint256 timestamp;
+        uint256 submittedAt;
     }
 
-    address[] public owners;
-    mapping(address => bool) public isOwner;
-    
-    // txId => owner => isConfirmed
-    mapping(uint256 => mapping(address => bool)) public confirmed;
-    
-    Transaction[] public transactions;
+    // =========================================================================
+    // STORAGE
+    // =========================================================================
 
-    /// @notice Number of required confirmations for transaction execution.
+    address[] private _owners;
+    mapping(address => bool) public isOwner;
+
+    // txId => owner => confirmed
+    mapping(uint256 => mapping(address => bool)) public confirmed;
+
+    Transaction[] private _transactions;
+
+    /// @notice Number of confirmations required to execute a transaction.
     uint256 public required;
 
-    /// @notice Timelock delay in seconds required before an approved transaction can be executed.
+    /// @notice Minimum delay before an approved transaction may be executed.
     uint256 public delay;
 
-    // ==========================================
+    // =========================================================================
     // MODIFIERS
-    // ==========================================
+    // =========================================================================
 
     modifier onlyOwner() {
         if (!isOwner[msg.sender]) revert NotOwner();
         _;
     }
 
-    modifier onlyWalletItself() {
-        if (msg.sender != address(this)) revert OnlyWalletItself();
+    modifier onlyWallet() {
+        if (msg.sender != address(this)) revert OnlyWallet();
         _;
     }
 
     modifier txExists(uint256 txId) {
-        if (txId >= transactions.length) revert TxNotFound();
+        if (txId >= _transactions.length) revert TransactionNotFound();
         _;
     }
 
     modifier notExecuted(uint256 txId) {
-        if (transactions[txId].executed) revert TxExecuted();
+        if (_transactions[txId].executed) {
+            revert TransactionAlreadyExecuted();
+        }
         _;
     }
 
     modifier notExpired(uint256 txId) {
-        if (block.timestamp > transactions[txId].timestamp + VALIDITY_PERIOD) {
-            revert TxExpired();
+        if (
+            block.timestamp >
+            _transactions[txId].submittedAt + VALIDITY_PERIOD
+        ) {
+            revert TransactionExpired();
         }
         _;
     }
 
-    // ==========================================
+    // =========================================================================
     // CONSTRUCTOR
-    // ==========================================
+    // =========================================================================
 
     /**
-     * @param _owners Array of initial unique wallet owners.
-     * @param _required Minimum number of confirmations required.
-     * @param _delay Timelock execution delay in seconds.
+     * @param owners_ Initial list of unique wallet owners.
+     * @param required_ Number of confirmations required for execution.
+     * @param delay_ Timelock delay in seconds.
      */
     constructor(
-        address[] memory _owners,
-        uint256 _required,
-        uint256 _delay
+        address[] memory owners_,
+        uint256 required_,
+        uint256 delay_
     ) {
-        if (_owners.length == 0) revert InvalidRequirement();
-        if (_required == 0 || _required > _owners.length) revert InvalidRequirement();
+        uint256 length = owners_.length;
 
-        required = _required;
-        delay = _delay;
+        if (length == 0) revert InvalidRequirement();
+        if (required_ == 0 || required_ > length) {
+            revert InvalidRequirement();
+        }
 
-        for (uint256 i = 0; i < _owners.length; i++) {
-            address owner = _owners[i];
-            
+        for (uint256 i = 0; i < length; ++i) {
+            address owner = owners_[i];
+
             if (owner == address(0)) revert ZeroAddress();
-            if (isOwner[owner]) revert OwnerAlreadyExists(); // Anti-duplicate defense
+            if (isOwner[owner]) revert OwnerAlreadyExists();
 
             isOwner[owner] = true;
-            owners.push(owner);
+            _owners.push(owner);
         }
+
+        required = required_;
+        delay = delay_;
     }
 
-    // ==========================================
-    // RECEIVE / FALLBACK
-    // ==========================================
+    // =========================================================================
+    // RECEIVE
+    // =========================================================================
 
-    /**
-     * @notice Enables the wallet to receive native network assets (ETH/POL/MATIC).
-     */
     receive() external payable {
-        if (msg.value > 0) {
-            emit Deposit(msg.sender, msg.value);
-        }
+        emit Deposit(msg.sender, msg.value, address(this).balance);
     }
 
-    // ==========================================
-    // CORE MULTISIG LOGIC
-    // ==========================================
+    // =========================================================================
+    // TRANSACTION SUBMISSION
+    // =========================================================================
 
     /**
-     * @notice Proposes a new transaction and automatically records the submitter's confirmation.
-     * @param to Target destination address or contract instance.
-     * @param value Amount of native currency to forward.
-     * @param data Calldata payload for standard or structural contract interaction.
-     * @return txId Unique sequential identifier assigned to the proposed transaction.
+     * @notice Submit a new transaction proposal.
+     * @dev The submitter automatically confirms the transaction.
+     *
+     * @param to Destination address.
+     * @param value Native currency amount to send.
+     * @param data Calldata payload.
+     *
+     * @return txId Newly created transaction ID.
      */
     function submitTransaction(
         address to,
@@ -186,135 +238,154 @@ contract PNJCMultiSigV4 is ReentrancyGuard {
     ) external onlyOwner returns (uint256 txId) {
         if (to == address(0)) revert ZeroAddress();
 
-        txId = transactions.length;
+        txId = _transactions.length;
 
-        transactions.push(Transaction({
-            to: to,
-            value: value,
-            data: data,
-            executed: false,
-            confirmations: 0,
-            timestamp: block.timestamp
-        }));
+        _transactions.push(
+            Transaction({
+                to: to,
+                value: value,
+                data: data,
+                executed: false,
+                confirmations: 0,
+                submittedAt: block.timestamp
+            })
+        );
 
-        emit SubmitTransaction(msg.sender, txId, to, value, data);
+        emit TransactionSubmitted(msg.sender, txId, to, value, data);
 
-        // Auto-confirm by the tx creator
-        confirmTransaction(txId);
+        _confirmTransaction(txId, msg.sender);
     }
 
-    /**
-     * @notice Confirms an existing, active transaction proposal.
-     * @param txId Identifier of the targeted transaction.
-     */
-    function confirmTransaction(uint256 txId)
-        public
-         oilyOwner
-         txExists(txId)
-         notExecuted(txId)
-         notExpired(txId)
-    {
-        if (confirmed[txId][msg.sender]) revert TxAlreadyConfirmed();
+    // =========================================================================
+    // CONFIRMATIONS
+    // =========================================================================
 
-        confirmed[txId][msg.sender] = true;
-        transactions[txId].confirmations++;
-
-        emit ConfirmTransaction(msg.sender, txId);
-    }
-
-    /**
-     * @notice Revokes a previously submitted confirmation.
-     * @param txId Identifier of the targeted transaction.
-     */
-    function revokeConfirmation(uint256 txId)
+    function confirmTransaction(
+        uint256 txId
+    )
         external
-         oilyOwner
-         txExists(txId)
-         notExecuted(txId)
-         notExpired(txId)
+        onlyOwner
+        txExists(txId)
+        notExecuted(txId)
+        notExpired(txId)
     {
-        if (!confirmed[txId][msg.sender]) revert TxNotConfirmed();
+        _confirmTransaction(txId, msg.sender);
+    }
+
+    function revokeConfirmation(
+        uint256 txId
+    )
+        external
+        onlyOwner
+        txExists(txId)
+        notExecuted(txId)
+        notExpired(txId)
+    {
+        if (!confirmed[txId][msg.sender]) {
+            revert TransactionNotConfirmed();
+        }
 
         confirmed[txId][msg.sender] = false;
-        transactions[txId].confirmations--;
+        _transactions[txId].confirmations--;
 
-        emit RevokeConfirmation(msg.sender, txId);
+        emit ConfirmationRevoked(msg.sender, txId);
     }
 
+    function _confirmTransaction(uint256 txId, address owner) internal {
+        if (confirmed[txId][owner]) {
+            revert TransactionAlreadyConfirmed();
+        }
+
+        confirmed[txId][owner] = true;
+        _transactions[txId].confirmations++;
+
+        emit TransactionConfirmed(owner, txId);
+    }
+
+    // =========================================================================
+    // EXECUTION
+    // =========================================================================
+
     /**
-     * @notice Executes an approved transaction once consensus and timelock bounds are met.
-     * @dev Protected against reentrancy via OpenZeppelin's ReentrancyGuard.
-     * @param txId Identifier of the approved transaction.
+     * @notice Execute a fully approved transaction.
+     *
+     * Requirements:
+     * - Transaction exists.
+     * - Not already executed.
+     * - Not expired.
+     * - Enough confirmations.
+     * - Timelock delay has elapsed.
      */
-    function executeTransaction(uint256 txId)
+    function executeTransaction(
+        uint256 txId
+    )
         external
-         oilyOwner
-         txExists(txId)
-         notExecuted(txId)
-         notExpired(txId)
-         nonReentrant
+        onlyOwner
+        txExists(txId)
+        notExecuted(txId)
+        notExpired(txId)
+        nonReentrant
     {
-        Transaction storage txn = transactions[txId];
+        Transaction storage txn = _transactions[txId];
 
-        if (txn.confirmations < required) revert InvalidRequirement();
+        if (txn.confirmations < required) {
+            revert InsufficientConfirmations();
+        }
 
-        // Timelock validation checks
-        if (block.timestamp < txn.timestamp + delay) {
+        if (block.timestamp < txn.submittedAt + delay) {
             revert ExecutionTooEarly();
         }
 
         txn.executed = true;
 
-        // Secure low-level call forwarding execution payload
         (bool success, ) = txn.to.call{value: txn.value}(txn.data);
 
         if (!success) {
-            txn.executed = false; // State rolled back on external call failures
+            txn.executed = false;
             revert ExecutionFailed();
         }
 
-        emit ExecuteTransaction(msg.sender, txId);
+        emit TransactionExecuted(msg.sender, txId);
     }
 
-    // ==========================================
-    // DECENTRALIZED GOVERNANCE (SELF-CALLS ONLY)
-    // ==========================================
+    // =========================================================================
+    // SELF-GOVERNED ADMINISTRATION
+    // =========================================================================
 
     /**
-     * @notice Adds a new owner to the wallet system infrastructure.
-     * @dev Must pass through the full multisig pipeline (submit -> confirm -> execute).
-     * @param newOwner Address of the new trusted signer.
+     * @notice Add a new owner.
+     * @dev Can only be called by the wallet itself.
      */
-    function addOwner(address newOwner) external onlyWalletItself {
+    function addOwner(address newOwner) external onlyWallet {
         if (newOwner == address(0)) revert ZeroAddress();
         if (isOwner[newOwner]) revert OwnerAlreadyExists();
 
         isOwner[newOwner] = true;
-        owners.push(newOwner);
-        
+        _owners.push(newOwner);
+
         emit OwnerAdded(newOwner);
     }
 
     /**
-     * @notice Removes an existing owner from the system infrastructure.
-     * @dev Must pass through the full multisig pipeline. Automatically adjusts threshold if needed.
-     * @param owner Address of the signer to be removed.
+     * @notice Remove an existing owner.
+     * @dev Automatically adjusts confirmation requirement if necessary.
      */
-    function removeOwner(address owner) external onlyWalletItself {
+    function removeOwner(address owner) external onlyWallet {
         if (!isOwner[owner]) revert OwnerDoesNotExist();
 
         isOwner[owner] = false;
-        
-        for (uint256 i = 0; i < owners.length; i++) {
-            if (owners[i] == owner) {
-                owners[i] = owners[owners.length - 1];
-                owners.pop();
+
+        uint256 length = _owners.length;
+        for (uint256 i = 0; i < length; ++i) {
+            if (_owners[i] == owner) {
+                _owners[i] = _owners[length - 1];
+                _owners.pop();
                 break;
             }
         }
 
-        if (required > owners.length) {
-            required = owners.length;
+        if (required > _owners.length) {
+            required = _owners.length;
             emit RequirementChanged(required);
         }
 
@@ -322,12 +393,10 @@ contract PNJCMultiSigV4 is ReentrancyGuard {
     }
 
     /**
-     * @notice Updates the required signatures threshold configuration.
-     * @dev Must pass through the full multisig pipeline.
-     * @param newRequired New quantitative threshold count.
+     * @notice Change the confirmation threshold.
      */
-    function changeRequirement(uint256 newRequired) external onlyWalletItself {
-        if (newRequired == 0 || newRequired > owners.length) {
+    function changeRequirement(uint256 newRequired) external onlyWallet {
+        if (newRequired == 0 || newRequired > _owners.length) {
             revert InvalidRequirement();
         }
 
@@ -336,49 +405,79 @@ contract PNJCMultiSigV4 is ReentrancyGuard {
     }
 
     /**
-     * @notice Modifies the global operational timelock window parameter.
-     * @dev Must pass through the full multisig pipeline.
-     * @param newDelay New constraint window represented in seconds.
+     * @notice Change the timelock delay.
      */
-    function changeTimelock(uint256 newDelay) external onlyWalletItself {
+    function changeTimelock(uint256 newDelay) external onlyWallet {
         delay = newDelay;
         emit TimelockChanged(newDelay);
     }
 
-    // ==========================================
-    // VIEW FUNCTIONS (EXTERNAL READS)
-    // ==========================================
+    // =========================================================================
+    // VIEW FUNCTIONS
+    // =========================================================================
 
-    /**
-     * @notice Returns the full dynamic array of active owner entities.
-     */
     function getOwners() external view returns (address[] memory) {
-        return owners;
+        return _owners;
     }
 
-    /**
-     * @notice Retrieves detailed data tracking arrays for a specified transaction record.
-     */
-    function getTransaction(uint256 txId)
+    function getTransactionCount() external view returns (uint256) {
+        return _transactions.length;
+    }
+
+    function getTransaction(
+        uint256 txId
+    )
         external
         view
+        txExists(txId)
         returns (
             address to,
             uint256 value,
             bytes memory data,
             bool executed,
             uint256 confirmations,
-            uint256 timestamp
+            uint256 submittedAt
         )
     {
-        Transaction storage t = transactions[txId];
-        return (t.to, t.value, t.data, t.executed, t.confirmations, t.timestamp);
+        Transaction storage txn = _transactions[txId];
+
+        return (
+            txn.to,
+            txn.value,
+            txn.data,
+            txn.executed,
+            txn.confirmations,
+            txn.submittedAt
+        );
     }
 
     /**
-     * @notice Returns total historical and active count inside transaction storage arrays.
+     * @notice Returns whether a transaction has enough confirmations.
      */
-    function getTransactionCount() external view returns (uint256) {
-        return transactions.length;
+    function isConfirmed(uint256 txId)
+        external
+        view
+        txExists(txId)
+        returns (bool)
+    {
+        return _transactions[txId].confirmations >= required;
+    }
+
+    /**
+     * @notice Returns the timestamp after which a transaction becomes executable.
+     */
+    function getExecutableAt(
+        uint256 txId
+    ) external view txExists(txId) returns (uint256) {
+        return _transactions[txId].submittedAt + delay;
+    }
+
+    /**
+     * @notice Returns the expiration timestamp of a transaction.
+     */
+    function getExpiresAt(
+        uint256 txId
+    ) external view txExists(txId) returns (uint256) {
+        return _transactions[txId].submittedAt + VALIDITY_PERIOD;
     }
 }
