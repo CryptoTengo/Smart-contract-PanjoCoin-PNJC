@@ -50,17 +50,30 @@
 
 ## 🪙 5. Tokenomics
 
-The total supply allocation is programmatically enforced by deployment architectures and smart contract parameters:
+### 📈 Allocation Table
 
-| Allocation | Share (%) | Purpose / Utility |
-| :--- | :--- | :--- |
-| **Liquidity Pool** | 50% | Initial liquidity provision on DEX platforms (QuickSwap/Uniswap) |
-| **Staking Rewards** | 15% | Yield distribution for long-term holders via `PNJC_Staking.sol` |
-| **Charity Fund** | 10% | Dedicated on-chain allocation for medical clowning foundations |
-| **Marketing & Ecosystem** | 10% | Brand growth, CEX listings, and global influencer campaigns |
-| **Treasury Reserve** | 10% | Emergency and operational buffer managed by `PNJC_Multisig.sol` |
-| **Team & Advisors** | 5% | Locked inside `PNJC_Vesting+Cliff.sol` with a linear release schedule |
+| MetaMask Wallet Name | Share | Amount (PNJC) | Wallet Addresses | Purpose (For Documentation) |
+| :--- | :---: | :---: | :--- | :--- |
+| 👑 **Main Wallet** | — | — | `0x35520a1B48dB3c9c45343cc05A23a970EEa740c6` | Main contract management and deployment wallet. |
+| 💧 **Liquidity (DEX)** | **50%** | **500,000,000,000** | `0xf55B994FDD7019d8E99c632c76A6e0AdE765988A` | Liquidity pool to ensure trading on exchanges (Uniswap/QuickSwap). |
+| 🏦 **Project Treasury Wallet** | **12%** | **120,000,000,000** | `0xD539a54f54e9B174F831D9Da6b48ac15441fC581` | Operational expenses, exchange listings, and marketing. |
+| 🏛️ **DAO Treasury Wallet** | **10%** | **100,000,000,000** | `0xD5e2DD65BA494565b53EFdcec6A9D2F494b5FE2` | Reserve fund for management through community governance voting. |
+| 💻 **Core Team Wallet** | **10%** | **100,000,000,000** | `0xdeBACbF7f51C3865dc2034ED676D3d344954f9FE` | Remuneration fund for the development team and advisors. |
+| 🌍 **Community & Growth** | **8%** | **80,000,000,000** | `0x54D3beB9e0F473803cC7a972Db2C17f005a2D089` | (Consolidated) Airdrops, bonuses, and loyalty programs. |
+| 👤 **Founder (Tengo)** | **5%** | **50,000,000,000** | `0xF48840486697AE3c15D38E30e45cECB9897CfA74` | Personal share allocated to the project founder. |
+| 🤍 **Charity Reserve Wallet** | **5%** | **50,000,000,000** | `0xa22E471BF4e405c92bDD074792d836923e31055` | Funding for the SmileDonate foundation and its medical clowning programs. |
 
+### 📝 Detailed Distribution Breakdown
+
+The total token supply is hardcoded into the smart contract and fixed at **1,000,000,000,000 PNJC** (1 trillion tokens). The distribution is split into 7 strategic categories to ensure market stability, ecosystem growth, and the fulfillment of our social mission:
+
+* **Market Liquidity (50% — 500 Billion PNJC):** Half of the total supply is dedicated to decentralized exchanges (DEXs) like QuickSwap and Uniswap on the Polygon network. This allocation is vital for preventing high volatility, reducing price slippage during larger transactions, and ensuring a seamless, public trading environment from day one.
+* **Project Treasury (12% — 120 Billion PNJC):** These funds cover ongoing operational costs, infrastructure maintenance, server management, security audits, and marketing campaigns (including influencer partnerships). It also serves as the reserve for future listing fees on centralized exchanges (CEXs).
+* **DAO Treasury (10% — 100 Billion PNJC):** A strategic reserve fund designed to transition under the full control of the Decentralized Autonomous Organization (DAO). Decisions regarding the deployment or investment of these tokens will be made collectively by PNJC holders through transparent on-chain voting.
+* **Core Team & Advisors (10% — 100 Billion PNJC):** A dedicated allocation aimed at incentivizing and rewarding core developers, smart contract architects, and strategic advisors who secure the project's long-term technical and operational health.
+* **Community & Growth (8% — 80 Billion PNJC):** A consolidated ecosystem pool designed to attract new users and reward active supporters. This fund covers interactive and Merkle-based airdrop campaigns, active user bonuses, community contests, and long-term loyalty initiatives.
+* **Founder's Allocation (5% — 50 Billion PNJC):** A personal fixed allocation assigned to the project founder (Tengo), aligning long-term leadership interests with the sustainable scaling of the PanjoCoin ecosystem.
+* **Charity Reserve (5% — 50 Billion PNJC):** The core vehicle for the project's primary social mission. Funds from this wallet are directly and transparently utilized to support the Georgian charity foundation **SmileDonate** (based in Tbilisi) supporting medical clowning at the Iashvili Children's Central Hospital.
 ---
 
 ## 🛠 6. Smart Contract Overview
