@@ -1,26 +1,26 @@
+
 # 🐕 PanjoCoin (PNJC)
 
-A fixed-supply ERC-20 decentralized ecosystem token built on Polygon, combining meme culture with on-chain DeFi infrastructure including staking, vesting, DAO governance, and locked liquidity mechanisms.
+PanjoCoin (PNJC) is a fixed-supply ERC-20 token deployed on the Polygon network, designed as a decentralized ecosystem combining meme culture with transparent on-chain financial infrastructure.
 
-PanjoCoin is designed as a transparent, verifiable, and community-driven protocol with fully on-chain token distribution and governance layers.
-
----
-
-## 🌐 Protocol Overview
-
-PanjoCoin (PNJC) is a decentralized token ecosystem that integrates:
-
-- ERC-20 token standard on Polygon
-- On-chain staking system
-- Vesting & cliff-based allocations
-- DAO governance treasury structure
-- Liquidity provisioning on decentralized exchanges
-
-The protocol is fully verifiable on-chain and designed for long-term ecosystem sustainability.
+The protocol integrates staking, vesting, DAO governance mechanisms, and liquidity provisioning systems with fully verifiable smart contracts.
 
 ---
 
-## ⛓ Network Information
+# 🌐 1. Protocol Overview
+
+PanjoCoin is a decentralized token ecosystem built around four core primitives:
+
+- 🪙 ERC-20 Token Standard (PNJC)
+- 💧 Liquidity Infrastructure (Uniswap / Quickswap)
+- 📊 Staking & Rewards System
+- 🏛 DAO Treasury Governance (evolving phase)
+
+The system is designed to operate fully on-chain with transparent allocation, verifiable contracts, and non-custodial user interaction.
+
+---
+
+# ⛓ 2. Network & Contract Information
 
 - Network: Polygon (PoS)
 - Token Standard: ERC-20
@@ -28,101 +28,117 @@ The protocol is fully verifiable on-chain and designed for long-term ecosystem s
 - Token Name: PanjoCoin
 - Decimals: 18
 - Total Supply: 1,000,000,000,000 PNJC
-- Mint Function: Disabled (Fixed Supply)
-- Contract Verified: Yes
+- Mint Function: Disabled (Fixed Supply Model)
 
-🔗 Contract Address:
+🔗 Verified Contract:
 https://polygonscan.com/address/0x781C0d15347Cb0B94C42C65c7a67E70371205De5
 
 ---
 
-## 🧠 Smart Contract Architecture
+# 🧠 3. System Architecture
 
-The PNJC ecosystem consists of modular smart contracts:
+The PNJC ecosystem consists of the following smart contract modules:
 
-- PNJC.sol → ERC-20 core token contract
-- PNJC_Staking.sol → staking & rewards distribution
-- PNJC_Vesting+Cliff.sol → time-locked allocations
-- PNJC_Airdrop.sol → claim-based distribution system
-- PNJC_Multisig.sol → governance and treasury control
+- PNJC.sol → Core ERC-20 token contract
+- PNJC_Staking.sol → Reward distribution & staking engine
+- PNJC_Vesting+Cliff.sol → Time-locked token distribution
+- PNJC_Airdrop.sol → Merkle-based claim system
+- PNJC_Multisig.sol → Governance & treasury control layer
 
-All contracts are deployed and publicly verifiable on-chain.
+Each module operates independently and is verifiable on-chain.
 
 ---
 
-## 🪙 Token Utility
+# 🔄 4. Protocol Flow (How System Works)
 
-PNJC is used within the ecosystem for:
+1. Token deployment on Polygon
+2. Liquidity provisioning on DEX (Uniswap / Quickswap)
+3. LP tokens locked or burned
+4. Users interact via staking contract
+5. Vesting contracts distribute allocated tokens over time
+6. DAO treasury manages ecosystem funding (future phase)
+
+---
+
+# 🪙 5. Token Utility
+
+PNJC has utility within the ecosystem through:
 
 - Staking rewards generation
-- Ecosystem incentive distribution
+- Ecosystem incentive mechanisms
 - DAO governance participation (future phase)
-- Community growth programs
+- Community reward programs
 - Treasury-backed ecosystem operations
 
 ---
 
-## 📊 Tokenomics
+# 📊 6. Tokenomics
 
-Full token allocation model is defined in:
+Token allocation and distribution model:
 
-📄 `/docs/Tokenomics.md`
+📄 Full details:
+/ docs / Tokenomics.md
 
-Key principles:
-- Fixed supply model (no inflation)
-- Fully on-chain allocation structure
-- Wallet-based distribution enforcement
-- Transparent vesting mechanisms
-- DAO-controlled treasury structure
+Core principles:
+- Fixed supply (no inflation)
+- On-chain allocation enforcement
+- Transparent wallet-based distribution
+- Locked liquidity model
+- Vesting-based team allocation
 
 ---
 
-## 💧 Liquidity & DEX Listing
+# 💧 7. Liquidity & Market Structure
 
-PNJC is intended for deployment on decentralized exchanges:
+PNJC will be deployed on:
 
 - Uniswap (Polygon)
 - Quickswap
 
-Liquidity will be provided at launch and secured through locking or burning of LP tokens to ensure transparency and prevent liquidity manipulation.
+Liquidity is provided at launch and secured via:
+
+- LP token locking (third-party locker) OR
+- LP burn mechanism after verification
+
+This ensures liquidity integrity and prevents unilateral withdrawal risk.
 
 ---
 
-## 🔐 Security Model
+# 🔐 8. Security Model
 
-The PNJC ecosystem is built with security-first architecture:
+The PNJC protocol is designed with security-first principles:
 
-- No minting capability (fixed supply)
-- Multisignature governance control
-- Vesting contracts enforce time-locked allocations
-- Liquidity locking mechanisms
-- Fully transparent on-chain execution
+- ❌ No minting functions
+- 🔐 Multisignature governance for critical operations
+- ⏳ Vesting contracts enforce time-locked allocations
+- 💧 Locked liquidity mechanisms prevent exit risk
+- 🌐 Fully transparent on-chain execution
 
-Detailed security analysis:
-📄 `/docs/Security_Model.md`
-
----
-
-## 🏛 Governance Structure
-
-- DAO Treasury controlled by community governance (future phase)
-- Project Treasury managed via multisignature wallet
-- Founder allocation subject to vesting constraints
-- No single-wallet control over ecosystem funds
+📄 Detailed analysis:
+/ docs / Security_Model.md
 
 ---
 
-## 🚀 Roadmap
+# 🏛 9. Governance Model
 
-**Phase 1:** Smart contract deployment & verification  
-**Phase 2:** Liquidity launch (Uniswap / Quickswap)  
+- DAO Treasury will be governed by community voting (future phase)
+- Project Treasury is controlled via multisignature wallet
+- Founder and team allocations are subject to vesting constraints
+- No single wallet has full ecosystem control
+
+---
+
+# 🚀 10. Roadmap
+
+**Phase 1:** Contract deployment & verification  
+**Phase 2:** DEX liquidity launch (Uniswap / Quickswap)  
 **Phase 3:** Staking system activation  
 **Phase 4:** DAO governance implementation  
 **Phase 5:** Ecosystem expansion & integrations  
 
 ---
 
-## ⚠️ Risk Disclosure
+# ⚠️ 11. Risk Disclosure
 
 PanjoCoin is an experimental decentralized digital asset.
 
@@ -131,21 +147,21 @@ Users acknowledge:
 - Cryptocurrency markets are highly volatile
 - No financial returns are guaranteed
 - Smart contract risk exists in all blockchain systems
-- Liquidity may fluctuate during early trading phases
-- Users are solely responsible for their own decisions
+- Liquidity conditions may fluctuate during early trading phases
+- Users are solely responsible for their decisions
 
 ---
 
-## 📚 Documentation
+# 📚 12. Documentation
 
-- Tokenomics → `/docs/Tokenomics.md`
-- Security Model → `/docs/Security_Model.md`
-- Liquidity Launch → `/docs/Liquidity_Launch.md`
-- Technical Specification → `/docs/Technical_Specification.md`
+- Tokenomics → /docs/Tokenomics.md  
+- Security Model → /docs/Security_Model.md  
+- Liquidity Launch → /docs/Liquidity_Launch.md  
+- Technical Specification → /docs/Technical_Specification.md  
 
 ---
 
-## 🌍 Community & Socials
+# 🌍 13. Community
 
 - X (Twitter): https://x.com/CryptoTengo
 - Instagram: https://www.instagram.com/crypto.tengo/
@@ -157,16 +173,15 @@ Users acknowledge:
 
 ---
 
-## 📌 Important Notes
+# 📌 14. Important Notes
 
-- PNJC is a decentralized experimental ecosystem token
-- All transactions occur on-chain via smart contracts
-- Token distribution is fully transparent and verifiable
-- No centralized custody of user funds exists (except multisig governance layer)
+- PNJC is fully on-chain and non-custodial
+- All token movements are verifiable on Polygon
+- Ecosystem contracts are modular and independently auditable
+- Liquidity is secured via locking mechanisms
 
 ---
 
-## 📫 Contact
+# 📫 15. Repository
 
-GitHub Repository:
 https://github.com/CryptoTengo/PanjoCoin-Docs
