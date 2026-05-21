@@ -1,0 +1,61 @@
+                           ┌──────────────────────────┐
+                           │        USERS / WALLET     │
+                           └─────────────┬────────────┘
+                                         │
+                                         ▼
+                           ┌──────────────────────────┐
+                           │      PNJC TOKEN LAYER     │
+                           │      (ERC-20 Contract)    │
+                           │  - Fixed Supply           │
+                           │  - No Minting             │
+                           └─────────────┬────────────┘
+                                         │
+        ┌────────────────────────────────┼────────────────────────────────┐
+        │                                │                                │
+        ▼                                ▼                                ▼
+
+┌──────────────────┐        ┌──────────────────────┐        ┌──────────────────────┐
+│  STAKING LAYER    │        │   LIQUIDITY LAYER    │        │   VESTING LAYER      │
+│ PNJC_Staking.sol  │        │  Uniswap / Quickswap │        │ PNJC_Vesting+Cliff   │
+│                  │        │                      │        │                      │
+│ - Lock tokens     │        │ - AMM Price Discovery│        │ - Time-locked alloc  │
+│ - Reward logic    │        │ - LP creation        │        │ - Cliff schedules    │
+│ - Yield distrib.  │        │ - LP locked/burned   │        │ - Linear release     │
+└─────────┬────────┘        └──────────┬───────────┘        └──────────┬───────────┘
+          │                             │                              │
+          ▼                             ▼                              ▼
+
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │                         REWARD / VALUE FLOW                           │
+   │                                                                        │
+   │   - Staking rewards                                                  │
+   │   - Trading liquidity impact                                         │
+   │   - Vesting unlocks                                                  │
+   └────────────────────────────────────────────────────────────────────────┘
+                                         │
+                                         ▼
+
+                           ┌──────────────────────────┐
+                           │     TREASURY LAYER       │
+                           │   (Multisig Wallet)      │
+                           │                          │
+                           │ - Ecosystem funding      │
+                           │ - Operational expenses   │
+                           │ - Strategic allocations  │
+                           └─────────────┬────────────┘
+                                         │
+                                         ▼
+
+                           ┌──────────────────────────┐
+                           │    GOVERNANCE LAYER      │
+                           │   Multisig → DAO Future  │
+                           │                          │
+                           │ Phase 1: Multisig Ops    │
+                           │ Phase 2: DAO Governance  │
+                           └─────────────┬────────────┘
+                                         │
+                                         ▼
+                           ┌──────────────────────────┐
+                           │     DAO ECOSYSTEM        │
+                           │ (Future Decentralization)│
+                           └──────────────────────────┘
