@@ -1,0 +1,233 @@
+Unified Economic, Liquidity, Staking, Vesting & Governance System
+1. 📌 Overview
+
+This document defines the unified system-level model of the PanjoCoin (PNJC) protocol.
+
+It integrates all subsystems into a single formal economic state machine, including:
+
+Supply model
+Staking model
+Liquidity model
+Vesting model
+Governance model
+
+This is the canonical system representation of PNJC as a single deterministic DeFi engine.
+
+2. 🧠 Global System Definition
+
+The PanjoCoin ecosystem is modeled as:
+
+S(t)={Supply(t),Staking(t),Liquidity(t),Vesting(t),Governance(t)}
+
+Where each subsystem evolves over time under deterministic rules.
+
+3. 🔢 Core System Equation
+3.1 Unified State Function
+State
+t+1
+	​
+
+=f(Supply
+t
+	​
+
+,Staking
+t
+	​
+
+,Liquidity
+t
+	​
+
+,Vesting
+t
+	​
+
+,Governance
+t
+	​
+
+)
+
+This ensures:
+
+Deterministic transitions
+No external randomness
+Fully traceable state evolution
+4. 💰 Supply Model (S)
+4.1 Total Supply Constraint
+S
+total
+	​
+
+=S
+circulating
+	​
+
++S
+staked
+	​
+
++S
+locked
+	​
+
+Invariant:
+
+Total supply is always conserved.
+
+4.2 Emission Constraint
+dt
+dS
+	​
+
+≤0(no uncontrolled inflation)
+5. 🏦 Staking Model (St)
+5.1 Staking State Function
+Staking(t)=(S
+staked
+	​
+
+,R
+accrued
+	​
+
+,R
+distributed
+	​
+
+)
+5.2 Reward Constraint
+R
+distributed
+	​
+
+≤R
+max
+	​
+
+5.3 Staking Influence on Supply
+S
+effective
+	​
+
+=S
+circulating
+	​
+
+−S
+staked
+	​
+
+6. 💧 Liquidity Model (L)
+6.1 AMM Constraint
+x⋅y=k
+
+Where:
+
+x = PNJC liquidity reserve
+y = paired asset reserve
+6.2 Liquidity Pressure Function
+P(t)∝
+Liquidity(t)
+Demand(t)
+	​
+
+6.3 System Impact
+
+Liquidity directly controls:
+
+price stability
+slippage
+MEV exposure
+7. 🔓 Vesting Model (V)
+7.1 Vesting State Function
+V(t)=LockedTokens→ReleasedTokens
+7.2 Cliff Constraint
+t<t
+cliff
+	​
+
+⇒V
+release
+	​
+
+(t)=0
+7.3 Linear Unlock Function
+dt
+dV
+	​
+
+≥0
+7.4 Supply Interaction
+S
+circulating
+	​
+
+(t)+=V
+release
+	​
+
+(t)
+8. 🏛 Governance Model (G)
+8.1 Multisig Control Function
+Execute(tx)⇒signatures≥k
+8.2 Governance State
+G(t)={Proposals,Votes,Executions}
+8.3 Governance Constraint
+No single actor can modify system state
+All critical actions require threshold approval
+9. 🔄 Cross-System Interaction Matrix
+9.1 Full Dependency Map
+Governance
+   ↓
+Vesting → Supply
+   ↓
+Staking → Effective Supply
+   ↓
+Liquidity → Price Formation
+   ↓
+Market Feedback → Demand
+   ↓
+Governance Adjustments
+9.2 System Feedback Loop
+Price→Demand→Liquidity→Price
+
+This creates a closed economic feedback system.
+
+10. 📊 Global Equilibrium Model
+10.1 Equilibrium Condition
+Liquidity(t)
+Demand(t)
+	​
+
+≈StablePriceRegion
+10.2 Disequilibrium Conditions
+Unlock shocks
+Liquidity withdrawal
+Staking collapse
+
+lead to:
+
+∣P(t)−P
+equilibrium
+	​
+
+∣↑
+11. ⚠️ System Risk Boundaries
+
+The system is constrained by:
+
+Maximum unlock velocity
+Minimum liquidity threshold
+Staking participation ratio
+Governance integrity assumptions
+12. 🧠 System Interpretation Layer
+
+This model defines PNJC as:
+
+A deterministic multi-layer financial state machine where supply, staking, liquidity, vesting, and governance continuously co-evolve under invariant-preserving constraints.
+
+13. 🏁 Final Statement
+
+The PanjoCoin Global System Model unifies all protocol subsystems into a single mathematically defined economic engine, ensuring deterministic behavior, invariant preservation, and full traceability across all on-chain financial operations.
