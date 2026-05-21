@@ -1,22 +1,23 @@
 
 # 🐕 PanjoCoin (PNJC)
 
-PanjoCoin (PNJC) is a fixed-supply ERC-20 token deployed on the Polygon network, designed as a decentralized ecosystem combining meme culture with transparent on-chain financial infrastructure.
+PanjoCoin (PNJC) is a decentralized fixed-supply ERC-20 token deployed on the Polygon network. The protocol integrates on-chain staking, vesting mechanisms, liquidity provisioning, and multisignature governance into a modular ecosystem designed for transparency and long-term sustainability.
 
-The protocol integrates staking, vesting, DAO governance mechanisms, and liquidity provisioning systems with fully verifiable smart contracts.
+The system is fully verifiable on-chain and operates without centralized custody of user funds.
 
 ---
 
 # 🌐 1. Protocol Overview
 
-PanjoCoin is a decentralized token ecosystem built around four core primitives:
+PanjoCoin is a decentralized ecosystem protocol combining:
 
-- 🪙 ERC-20 Token Standard (PNJC)
-- 💧 Liquidity Infrastructure (Uniswap / Quickswap)
-- 📊 Staking & Rewards System
-- 🏛 DAO Treasury Governance (evolving phase)
+- ERC-20 token standard (PNJC)
+- On-chain staking and reward distribution
+- Vesting + cliff-based allocation system
+- DAO governance structure (evolving phase)
+- Liquidity provisioning on decentralized exchanges
 
-The system is designed to operate fully on-chain with transparent allocation, verifiable contracts, and non-custodial user interaction.
+The protocol is designed to function as a transparent, non-custodial financial system.
 
 ---
 
@@ -37,104 +38,107 @@ https://polygonscan.com/address/0x781C0d15347Cb0B94C42C65c7a67E70371205De5
 
 # 🧠 3. System Architecture
 
-The PNJC ecosystem consists of the following smart contract modules:
+The PNJC ecosystem consists of modular smart contract components:
 
 - PNJC.sol → Core ERC-20 token contract
-- PNJC_Staking.sol → Reward distribution & staking engine
-- PNJC_Vesting+Cliff.sol → Time-locked token distribution
-- PNJC_Airdrop.sol → Merkle-based claim system
-- PNJC_Multisig.sol → Governance & treasury control layer
+- PNJC_Staking.sol → Staking and reward distribution system
+- PNJC_Vesting+Cliff.sol → Time-locked token distribution system
+- PNJC_Airdrop.sol → Merkle-based claim distribution system
+- PNJC_Multisig.sol → Governance and treasury control layer
 
-Each module operates independently and is verifiable on-chain.
+Each module operates independently and is fully verifiable on-chain.
 
 ---
 
-# 🔄 4. Protocol Flow (How System Works)
+# 🔄 4. Protocol Flow
 
-1. Token deployment on Polygon
-2. Liquidity provisioning on DEX (Uniswap / Quickswap)
-3. LP tokens locked or burned
-4. Users interact via staking contract
-5. Vesting contracts distribute allocated tokens over time
-6. DAO treasury manages ecosystem funding (future phase)
+The PNJC ecosystem operates as follows:
+
+1. Token deployment on Polygon network
+2. Liquidity provisioning on decentralized exchanges
+3. LP tokens locked or burned for security
+4. Users interact with staking contracts
+5. Vesting contracts release locked allocations over time
+6. Treasury managed via multisignature governance
+7. DAO governance layer evolves over time
 
 ---
 
 # 🪙 5. Token Utility
 
-PNJC has utility within the ecosystem through:
+PNJC serves as the utility asset within the ecosystem:
 
-- Staking rewards generation
-- Ecosystem incentive mechanisms
+- Staking reward generation
+- Ecosystem incentive distribution
 - DAO governance participation (future phase)
-- Community reward programs
 - Treasury-backed ecosystem operations
+- Community reward mechanisms
 
 ---
 
 # 📊 6. Tokenomics
 
-Token allocation and distribution model:
+The full tokenomics model is defined in:
 
-📄 Full details:
-/ docs / Tokenomics.md
+📄 `/docs/Tokenomics.md`
 
 Core principles:
+
 - Fixed supply (no inflation)
 - On-chain allocation enforcement
-- Transparent wallet-based distribution
-- Locked liquidity model
-- Vesting-based team allocation
+- Wallet-based distribution system
+- Locked liquidity structure
+- Vesting-based allocations for team and contributors
 
 ---
 
 # 💧 7. Liquidity & Market Structure
 
-PNJC will be deployed on:
+PNJC will be listed on decentralized exchanges:
 
 - Uniswap (Polygon)
 - Quickswap
 
-Liquidity is provided at launch and secured via:
+Liquidity will be provided at launch and secured via:
 
-- LP token locking (third-party locker) OR
-- LP burn mechanism after verification
+- LP token locking via third-party locker OR
+- Permanent LP burn mechanism
 
-This ensures liquidity integrity and prevents unilateral withdrawal risk.
+This ensures liquidity cannot be withdrawn by deployers after launch.
 
 ---
 
 # 🔐 8. Security Model
 
-The PNJC protocol is designed with security-first principles:
+The PNJC protocol is built with a security-first architecture:
 
-- ❌ No minting functions
-- 🔐 Multisignature governance for critical operations
-- ⏳ Vesting contracts enforce time-locked allocations
-- 💧 Locked liquidity mechanisms prevent exit risk
-- 🌐 Fully transparent on-chain execution
+- No minting functions (fixed supply enforcement)
+- Multisignature governance control for treasury operations
+- Vesting contracts enforce time-based token release
+- Liquidity locking mechanisms prevent exit liquidity risk
+- Fully transparent on-chain execution
 
-📄 Detailed analysis:
-/ docs / Security_Model.md
+📄 Full security analysis:
+`/docs/Security_Model.md`
 
 ---
 
 # 🏛 9. Governance Model
 
-- DAO Treasury will be governed by community voting (future phase)
-- Project Treasury is controlled via multisignature wallet
+- DAO Treasury governed by community voting (future phase)
+- Project Treasury controlled via multisignature wallet
 - Founder and team allocations are subject to vesting constraints
-- No single wallet has full ecosystem control
+- No single-wallet control over ecosystem funds
 
 ---
 
 # 🚀 10. Roadmap
 
-**Phase 1:** Contract deployment & verification  
-**Phase 2:** DEX liquidity launch (Uniswap / Quickswap)  
-**Phase 3:** Staking system activation  
-**Phase 4:** DAO governance implementation  
-**Phase 5:** Ecosystem expansion & integrations  
+Phase 1 → Deployment & contract verification  
+Phase 2 → DEX liquidity launch (Uniswap / Quickswap)  
+Phase 3 → Staking system activation  
+Phase 4 → DAO governance implementation  
+Phase 5 → Ecosystem expansion & integrations  
 
 ---
 
@@ -148,16 +152,19 @@ Users acknowledge:
 - No financial returns are guaranteed
 - Smart contract risk exists in all blockchain systems
 - Liquidity conditions may fluctuate during early trading phases
-- Users are solely responsible for their decisions
+- Users are fully responsible for their decisions
 
 ---
 
 # 📚 12. Documentation
 
-- Tokenomics → /docs/Tokenomics.md  
-- Security Model → /docs/Security_Model.md  
-- Liquidity Launch → /docs/Liquidity_Launch.md  
-- Technical Specification → /docs/Technical_Specification.md  
+Full protocol documentation is structured in `/docs`:
+
+- Tokenomics → `/docs/Tokenomics.md`
+- Security Model → `/docs/Security_Model.md`
+- Liquidity Launch → `/docs/Liquidity_Launch.md`
+- Governance → `/docs/Governance.md`
+- Risk Disclosure → `/docs/Risk_Disclosure.md`
 
 ---
 
@@ -173,12 +180,13 @@ Users acknowledge:
 
 ---
 
-# 📌 14. Important Notes
+# 📌 14. Key Properties
 
-- PNJC is fully on-chain and non-custodial
-- All token movements are verifiable on Polygon
-- Ecosystem contracts are modular and independently auditable
-- Liquidity is secured via locking mechanisms
+- Fully on-chain token system
+- Non-custodial user interaction
+- Fixed supply model
+- Modular smart contract architecture
+- Transparent governance structure
 
 ---
 
