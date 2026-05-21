@@ -1,0 +1,267 @@
+Here is a **clean GitHub-ready English version** of your professional mathematical tokenomics model (CertiK-style formal specification).
+
+---
+
+# 🧠 PanjoCoin (PNJC) — Formal Tokenomics Mathematical Model v1.0
+
+---
+
+# 1. 📦 Basic Model Variables
+
+Let:
+
+* ( S_0 ) — total fixed supply
+* ( t \in [0, T] ) — time (measured in months or blocks)
+* ( N ) — number of allocation categories
+* ( A_i ) — allocation share of category *i*
+
+### Normalization condition:
+
+[
+\sum_{i=1}^{N} A_i = 1
+]
+
+---
+
+# 2. 🪙 Supply Model (Emission Structure)
+
+PanjoCoin uses a **fixed-supply, non-inflationary model**:
+
+[
+S(t) = S_0
+]
+
+However, circulating supply is time-dependent:
+
+[
+C(t) = \sum_{i=1}^{N} V_i(t)
+]
+
+where:
+
+* ( C(t) ) — circulating supply at time *t*
+* ( V_i(t) ) — unlocked supply from category *i*
+
+---
+
+# 3. 🔓 Vesting / Unlock Model (Core CertiK Component)
+
+Each allocation category follows a deterministic vesting function.
+
+## 📌 General Vesting Function
+
+[
+V_i(t) =
+\begin{cases}
+0, & t < t_{cliff,i} \
+A_i S_0 \cdot \frac{t - t_{cliff,i}}{t_{end,i} - t_{cliff,i}}, & t_{cliff,i} \le t < t_{end,i} \
+A_i S_0, & t \ge t_{end,i}
+\end{cases}
+]
+
+---
+
+## 📊 Interpretation:
+
+* Before cliff → no unlock
+* During vesting → linear release
+* After completion → fully unlocked
+
+---
+
+# 4. ⛓ Token Allocation Model
+
+The total supply is distributed across predefined categories:
+
+| Category        | Allocation |
+| --------------- | ---------- |
+| Liquidity       | ( A_1 )    |
+| Team            | ( A_2 )    |
+| Staking Rewards | ( A_3 )    |
+| Airdrop         | ( A_4 )    |
+| Treasury        | ( A_5 )    |
+
+### Vector form:
+
+[
+\mathbf{A} =
+\begin{bmatrix}
+A_1 \
+A_2 \
+A_3 \
+A_4 \
+A_5
+\end{bmatrix}
+\quad \text{where} \quad \sum A_i = 1
+]
+
+---
+
+# 5. 📈 Circulating Supply Function
+
+[
+C(t) = S_0 \cdot \sum_{i=1}^{N} A_i \cdot f_i(t)
+]
+
+where:
+
+[
+f_i(t) =
+\begin{cases}
+0, & t < t_{cliff,i} \
+\frac{t - t_{cliff,i}}{t_{end,i} - t_{cliff,i}}, & t_{cliff,i} \le t < t_{end,i} \
+1, & t \ge t_{end,i}
+\end{cases}
+]
+
+---
+
+# 6. 📉 Unlock Velocity (Risk Metric)
+
+CertiK-style risk analysis focuses on unlock velocity:
+
+[
+U(t) = \frac{dC(t)}{dt}
+]
+
+Interpretation:
+
+* High ( U(t) ) → inflation pressure
+* Low ( U(t) ) → stable supply dynamics
+* Controlled slope → institutional-grade tokenomics
+
+---
+
+# 7. 🧾 Formal Allocation Proof
+
+## ✅ Theorem: Supply Conservation
+
+### Statement:
+
+Total circulating supply never exceeds total supply:
+
+[
+\forall t: \quad C(t) \le S_0
+]
+
+---
+
+## Proof:
+
+Starting from definition:
+
+[
+C(t) = \sum_{i=1}^{N} V_i(t)
+]
+
+Since:
+
+[
+V_i(t) \le A_i S_0
+]
+
+Then:
+
+[
+C(t) \le \sum_{i=1}^{N} A_i S_0
+]
+
+Factorization:
+
+[
+C(t) \le S_0 \sum_{i=1}^{N} A_i
+]
+
+Using normalization:
+
+[
+\sum_{i=1}^{N} A_i = 1
+]
+
+Therefore:
+
+[
+C(t) \le S_0
+]
+
+✔ QED
+
+---
+
+# 8. ⏳ Vesting Schedule Function (Visualization Model)
+
+f(t)=\begin{cases}0,&t<t_c\\frac{t-t_c}{T-t_c},&t_c\le t<T\1,&t\ge T\end{cases}
+
+---
+
+# 9. 📊 Economic Interpretation Layer
+
+Token price dynamics are modeled as:
+
+[
+P(t) = f(\text{utility}, \text{liquidity}, \text{velocity}, \text{burn rate}, \text{staking demand})
+]
+
+---
+
+## Simplified interpretation:
+
+* Increased staking → reduced circulating supply → upward price pressure
+* Higher unlock velocity → increased sell pressure
+* Deeper liquidity → reduced volatility
+
+---
+
+# 10. 🛡 Risk Function Model
+
+Define system risk:
+
+[
+R(t) = \alpha U(t) + \beta M(t) + \gamma L^{-1}(t)
+]
+
+where:
+
+* ( U(t) ) = unlock velocity
+* ( M(t) ) = market manipulation exposure
+* ( L(t) ) = liquidity depth
+
+---
+
+# 11. 🧮 Final System Representation
+
+The full tokenomics system is defined as:
+
+[
+\mathcal{T} = (S_0, \mathbf{A}, V_i(t), C(t), U(t))
+]
+
+subject to:
+
+* Supply conservation
+* Deterministic vesting schedules
+* Bounded emission rate
+* Multisig-controlled governance layer
+
+---
+
+# 🧠 Summary
+
+This model provides:
+
+* ✔ Formal supply conservation proof
+* ✔ Deterministic vesting mathematics
+* ✔ Transparent unlock schedule
+* ✔ Quantifiable risk modeling
+* ✔ Audit-grade tokenomics structure
+
+---
+
+If you want next step, I can also generate:
+
+* 📊 GitHub README.md version (clean formatted)
+* 🔐 Threat model document (CertiK audit style)
+* 📈 Unlock schedule chart (visual graph)
+* 📦 Full “Audit Pack v3” for investors
+
+Just tell me.
