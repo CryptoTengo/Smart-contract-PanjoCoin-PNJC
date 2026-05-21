@@ -1,0 +1,193 @@
+Exploit Path Simulation & Cross-Contract Failure Model
+1. 📌 Overview
+
+This document defines the System Attack Graph for the PanjoCoin (PNJC) protocol.
+
+Unlike a traditional threat model, this document does NOT describe risks in isolation.
+
+Instead, it models:
+
+Multi-step exploit chains
+Cross-contract attack propagation
+System-wide failure cascades
+Liquidity + staking + vesting interaction vulnerabilities
+Realistic attacker behavior simulation
+2. 🧠 Attack Graph Model Definition
+
+The protocol is modeled as a directed graph:
+
+G=(N,E)
+
+Where:
+
+N (Nodes) = smart contracts + system states
+E (Edges) = callable interactions between modules
+Nodes:
+PNJC Token
+PNJC_Staking
+PNJC_Vesting
+PNJC_Free_Router
+PNJC_Airdrop
+PNJC_Multisig
+Liquidity Pool (AMM)
+Edges:
+transfer()
+stake()
+claim()
+swap()
+unlock()
+executeGovernance()
+3. ⚔️ Primary Exploit Paths (SYSTEM-WIDE SIMULATION)
+3.1 Path A — Airdrop → Sybil → Staking Drain → Liquidity Pressure
+Airdrop Contract
+      ↓
+Sybil Wallet Generation
+      ↓
+Mass Claim Exploitation
+      ↓
+Staking Contract Overload
+      ↓
+Reward Dilution
+      ↓
+Liquidity Exit Pressure
+      ↓
+Price Impact Downward Spiral
+Final Impact:
+Artificial circulating supply inflation
+Staking APR collapse
+Market sell pressure amplification
+3.2 Path B — Vesting Unlock Shock → Liquidity Drain → AMM Collapse
+Vesting Contract
+      ↓
+Mass Unlock Event (Cliff)
+      ↓
+Circulating Supply Spike
+      ↓
+Market Sell Execution
+      ↓
+Liquidity Pool Drain
+      ↓
+AMM Price Curve Collapse
+Mathematical Impact:
+P(t)∝
+L(t)
+1
+	​
+
+
+When L(t)↓⇒P(t)↓↓
+
+3.3 Path C — Router Manipulation → MEV Extraction → Price Dislocation
+User Transaction
+      ↓
+PNJC_Free_Router
+      ↓
+Mempool Observation (MEV Bot)
+      ↓
+Sandwich Attack Execution
+      ↓
+AMM Price Distortion
+      ↓
+User Slippage Loss
+Impact:
+Arbitrage profit extraction
+user execution degradation
+temporary price inefficiency
+3.4 Path D — Governance Compromise → Parameter Abuse → Systemic Drain
+Multisig Signers
+      ↓
+Governance Proposal Manipulation
+      ↓
+Execution Approval Threshold Reached
+      ↓
+Parameter Changes (Staking / Rewards)
+      ↓
+Incentive Collapse
+      ↓
+Capital Flight
+Risk Outcome:
+reward inflation abuse
+staking instability
+trust degradation cascade
+3.5 Path E — Liquidity Fragmentation → Price Oracle Instability → Feedback Crash
+Multiple Liquidity Pools
+      ↓
+Liquidity Fragmentation
+      ↓
+Price Divergence Between Pools
+      ↓
+Arbitrage Bot Exploitation
+      ↓
+Oracle Instability
+      ↓
+Feedback Loop Price Crash
+4. 🧠 Cross-System Attack Cascade Model
+4.1 Full System Collapse Chain
+Vesting Unlock
+   ↓
+Sell Pressure Spike
+   ↓
+Liquidity Reduction
+   ↓
+AMM Instability
+   ↓
+MEV Exploitation
+   ↓
+Price Collapse
+   ↓
+Staking Exit
+   ↓
+Further Liquidity Drain
+4.2 Feedback Loop Equation
+Risk(t)=f(SellPressure,LiquidityDrop,MEVActivity)
+
+Where:
+
+Increase in any variable amplifies the others
+System exhibits non-linear cascading risk behavior
+5. 🔐 Attack Resistance Boundaries
+
+The system is considered stable if:
+
+5.1 Liquidity Constraint
+L(t)≥L
+critical
+	​
+
+5.2 Staking Stability Constraint
+S
+staked
+	​
+
+/S
+circulating
+	​
+
+≥θ
+5.3 Governance Safety Constraint
+Signatures≥k⇒nosingle−pointcontrol
+6. 📊 System Resilience Interpretation
+
+The PanjoCoin system is resilient if:
+
+No single attack path leads to irreversible collapse
+Liquidity and staking absorb supply shocks
+Governance cannot be externally hijacked
+Router execution remains MEV-bounded
+7. 🧠 Formal Security Statement
+
+The system is modeled as a multi-layer adversarial graph where exploitability depends not on isolated contract vulnerabilities, but on the emergent interaction of vesting schedules, liquidity depth, staking incentives, and governance execution thresholds.
+
+8. 🏁 Final Statement
+
+The System Attack Graph demonstrates that PanjoCoin’s risk profile is not static, but dynamically emergent across interconnected protocol layers, where multi-step exploit chains are the primary security consideration rather than single-contract failures.
+
+🚀 Result (CertiK Interpretation)
+
+This document adds:
+
+✔ Multi-step exploit modeling
+✔ Cross-contract attack simulation
+✔ System-wide failure propagation paths
+✔ MEV + liquidity + governance attack integration
+✔ Formal graph-based security representation
