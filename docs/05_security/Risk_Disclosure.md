@@ -1,4 +1,4 @@
-⚠️ Risk Disclosure — PanjoCoin (PNJC)
+# ⚠️ Risk Disclosure — PanjoCoin (PNJC)
 
 ---
 
