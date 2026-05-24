@@ -19,6 +19,7 @@ No upgradeability or proxy architecture
 The smart contract is intentionall
 
 ⛓ 2. Network & Contract Information
+
 Network: Polygon PoS
 Token Standard: ERC-20
 Name: PanjoCoin
@@ -47,7 +48,9 @@ No admin roles
 No pausing mechanism
 No upgradeability (proxy-free)
 No blacklist / whitelist logic
+
 🔄 4. Protocol Behavior
+
 Contract is deployed on Polygon
 Entire fixed supply is minted to a single initial address
 Tokens are distributed off-chain or via external contracts
@@ -55,6 +58,7 @@ Users interact via standard ER
 Optional integrations:
 DEX trading (Uniswap / QuickSwap)
 Permit-based approvals
+
 🪙 5. Token Functionality
 
 PNJC supports standard ERC-20 usage:
@@ -63,7 +67,9 @@ Token trans
 Approvals & allowances
 Permit-based approvals (gasless transactions)
 Token burning (deflationary mechanism)
+
 📊 6. Tokenomics Model
+
 Fi
 All tokens minted at deployment
 No future minting capability
@@ -81,6 +87,7 @@ Standard ERC-20 interface ensures router compatibility
 Liquidity considerations:
 LP tokens should be locked or managed via trusted mechanism
 Liquidity strategy is external to the token contract
+
 🔐 8. Security Model
 
 The contract follows a minimal trust architecture:
@@ -113,6 +120,7 @@ No custom transfer restrictions or logic layers
 📄 Full model: /docs/THREAT_MODEL.md
 
 🏛 10. Governance Model
+
 No on-chain governance is implemented in the token contract
 No DAO logic exists in the core token layer
 Any governance mechanisms are external systems (if deployed)
@@ -121,7 +129,9 @@ This ensures:
 
 No protocol-level administrative risk
 No governance attack surface in token contract
+
 🚀 11. Deployment & Lifecycle
+
 Deployment steps:
 Deploy contract on Polygon
 Mint fixed supply to initial address
@@ -155,7 +165,9 @@ All extended documentation is located in /docs:
 /docs/TOKENOMICS.md → Supply & distribution model
 /docs/UNISWAP_READINESS.md → DEX integration notes
 /docs/DEPLOYMENT.md → Deployment procedure
+
 🌍 14. Community Links
+
 X (Twitter): https://x.com/CryptoTengo
 Instagram: https://www.instagram.com/crypto.tengo/
 YouTube: https://www.youtube.com/@CryptoTengo
@@ -163,13 +175,16 @@ Reddit: https://www.reddit.com/user/cryptotengo/
 Medium: https://medium.com/@cryptotengo
 TikTok: https://www.tiktok.com/@cryptotengo
 Discord: https://discord.com/channels/1337364200254738454/1337364201588654093
+
 📌 15. Key Properties (Verified On-Chain)
+
 ERC-20 compliant token
 Fixed supply model
 No minting capability
 No upgradeability
 No privileged roles in contract
 Standard OpenZeppelin implementation
+
 📫 16. Repository
 
 https://github.com/CryptoTengo/PanjoCoin-Docs
