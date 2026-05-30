@@ -1,0 +1,27 @@
+
+Deposit both assets into the pool.
+
+---
+
+### Step 4: Receive LP Tokens
+
+You will receive LP tokens representing your share of liquidity.
+
+These tokens can later be:
+- staked (future feature)
+- held for rewards
+- withdrawn to remove liquidity
+
+---
+
+## Risks
+
+- Impermanent loss may occur
+- Token price is market-driven
+- Liquidity is not guaranteed
+
+---
+
+## Recommendation
+
+Early liquidity providers participate in initial price discovery and ecosystem formation.
